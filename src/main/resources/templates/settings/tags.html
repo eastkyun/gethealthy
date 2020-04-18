@@ -26,7 +26,8 @@
                     <div class="alert alert-info" role="alert">
                         관심있는 상품을 입력해 주세요. 상품이 입고되면 알림을 받을 수 있습니다. 태그를 입력하고 콤마(,) 또는 엔터를 입력하세요
                     </div>
-                    <input aria-describedby="tagHelp" class="tagify-outside" id="tags" name="tags" type="text">
+                    <input aria-describedby="tagHelp" class="tagify-outside" th:value="${#strings.listJoin(tags,',')}"
+                           id="tags" name="tags" type="text">
                 </div>
             </div>
         </div>

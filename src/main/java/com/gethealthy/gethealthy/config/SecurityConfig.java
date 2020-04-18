@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/");
 
         http.rememberMe()
-//                .userDetailsService(accountService)
+                .userDetailsService(accountService)
                 .tokenRepository(tokenRepository());
     }
 
