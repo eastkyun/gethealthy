@@ -20,4 +20,19 @@ public class MainController {
     public String login(){
         return "login";
     }
+
+    @GetMapping("/about")
+    public String about(){
+        return "about";
+    }
+
+    @GetMapping("/products")
+    public String product(){
+        return "products";
+    }
+
+    @GetMapping("/community")
+    public String community(){
+        return "community";
+    }
 }
