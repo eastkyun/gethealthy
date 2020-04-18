@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // spring security login 우회
         http.authorizeRequests()
                 .mvcMatchers("/", "/login", "/sign-up",  "/check-email-token"
-                        , "/email-login", "/check-email-login", "/login-link").permitAll()
+                        , "/email-login", "/check-email-login", "/login-link"
+                        ,"/about","/products","/products/*","/community","/community/*").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 .anyRequest().authenticated();
 

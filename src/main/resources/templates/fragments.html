@@ -5,10 +5,40 @@
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>홍삼 지킴이</title>
+    <title>건강한 홍삼군</title>
     <style>
         .container {
             max-width: 100%;
+        }
+        .main-a-tag-style {
+            text-decoration: none;
+            font-size: 1.3em;
+            color:#111111;
+        }
+        .main-a-tag-style:hover {
+            text-decoration: none;
+            font-size: 1.3em;
+            color:#111111;
+        }
+        .main-a-tag-style:focus {
+            text-decoration: none;
+            font-size: 1.3em;
+            color:#111111;
+        }
+        .nav-menu-custom-a-tag{
+            color: #111131;
+            font-size: 1.2em;
+        }
+        .nav-menu-custom-a-tag:hover{
+            color: #111131;
+            font-size: 1.2em;
+        }
+        .nav-menu-custom-a-tag:focus{
+            color: #111131;
+            font-size: 1.2em;
+        }
+        #logout_form:hover{
+            cursor:pointer;
         }
     </style>
 
@@ -20,77 +50,118 @@
 </head>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="main-nav">
-    <a class="navbar-brand" href="/" th:href="@{/}">
-        <!--        <img alt="가게이름" height="30" src="/images/logo_sm.png" width="30">-->
-        홍삼지킴이
-    </a>
-    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-            class="navbar-toggler"
-            data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div th:fragment="main-nav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <form class="form-inline" method="get" th:action="@{/search/study}">
-                    <input class="form-control mr-sm-2" name="keyword" placeholder="상품 찾기" type="search">
-                </form>
-            </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
 
-        <ul class="navbar-nav justify-content-end">
-            <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" href="#" th:href="@{/login}">로그인</a>
-            </li>
-            <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" href="#" th:href="@{/sign-up}">회원가입</a>
-            </li>
+            </ul>
 
-
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="#" th:href="@{/notifications}">
-                    <i aria-hidden="true" class="fa fa-bell-o"></i>
-                </a>
-            </li>
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link btn btn-outline-primary" hr  ef="#" th:href="@{/new-study}">
-                    <i aria-hidden="true" class="fa fa-plus"></i>배송목록
-                </a>
-            </li>
-
-            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
-                   id="userDropdown" role="button">
-                    <svg class="rounded border bg-light" data-jdenticon-value="user127" height="24"
-                         th:data-jdenticon-value="${#authentication.name}"
-                         th:if="${#strings.isEmpty(account?.profileImage)}" width="24"></svg>
-                    <img class="rounded border" height="24"
-                         th:if="${!#strings.isEmpty(account?.profileImage)}" th:src="${account.profileImage}"
-                         width="24">
-                </a>
-                <div aria-labelledby="userDropdown" class="dropdown-menu dropdown-menu-sm-right">
-                    <h6 class="dropdown-header">
-                        <span sec:authentication="name">Username</span>
-                    </h6>
-                    <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>
-                    <a class="dropdown-item">장바구니</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>
-                    <form action="#" class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
-                        <button class="dropdown-item" type="submit">로그아웃</button>
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item">
+                    <form class="form-inline" method="get" th:action="@{/search/study}">
+                        <input class="form-control mr-sm-2" name="keyword" placeholder="상품 찾기" type="search">
                     </form>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="#" th:href="@{/login}">LOGIN</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="#" th:href="@{/sign-up}">JOIN</a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="#" th:href="@{/notifications}">
+                        <i aria-hidden="true" class="fa fa-bell-o"></i>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" hr  ef="#" th:href="@{/profile/cart}">
+<!--                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>-->
+                        CART
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" hr  ef="#" th:href="@{'/profile/' + ${#authentication.name} +'/order'}">
+                        ORDER
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" hr  ef="#" th:href="@{'/profile/' + ${#authentication.name}}">
+                        MYPAGE
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form action="#" class="form-inline my-2 my-lg-0" id="logout_form" method="post" th:action="@{/logout}">
+                        <a class="nav-link" onclick="document.getElementById('logout_form').submit();">LOGOUT</a>
+                    </form>
+                </li>
+
+<!--                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">-->
+<!--                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"-->
+<!--                       id="userDropdown" role="button">-->
+<!--                        <svg class="rounded border bg-light" data-jdenticon-value="user127" height="24"-->
+<!--                             th:data-jdenticon-value="${#authentication.name}"-->
+<!--                             th:if="${#strings.isEmpty(account?.profileImage)}" width="24"></svg>-->
+<!--                        <img class="rounded border" height="24"-->
+<!--                             th:if="${!#strings.isEmpty(account?.profileImage)}" th:src="${account.profileImage}"-->
+<!--                             width="24">-->
+<!--                    </a>-->
+<!--                    <div aria-labelledby="userDropdown" class="dropdown-menu dropdown-menu-sm-right">-->
+<!--                        <h6 class="dropdown-header">-->
+<!--                            <span sec:authentication="name">Username</span>-->
+<!--                        </h6>-->
+<!--                        <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>-->
+<!--                        <a class="dropdown-item">장바구니</a>-->
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>-->
+<!--                        <form action="#" class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">-->
+<!--                            <button class="dropdown-item" type="submit">로그아웃</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="mt-5 mb-5 justify-content-center">
+            <div class="text-center">
+                <!--        <img alt="가게이름" height="30" src="/images/logo_sm.png" width="30">-->
+                <a class="lead main-a-tag-style"  href="/" th:href="@{/}">
+                    건강한 홍삼군
+                </a>
+            </div>
+            <div class="row mt-5 mb-3 justify-content-md-center">
+                <div class="col-md-auto">
+                    <a class="nav-menu-custom-a-tag text-center" th:href="@{/about}">
+                        ABOUT
+                    </a>
                 </div>
-            </li>
-        </ul>
+                <div class="col-md-auto">
+                    <a class="nav-menu-custom-a-tag text-center" th:href="@{/products}">
+                        PRODUCT
+                    </a>
+                </div>
+                <div class="col-md-auto">
+                    <a class="nav-menu-custom-a-tag text-center" th:href="@{/community}">
+                        COMMUNITY
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
+</div>
 
 <footer th:fragment="footer">
     <div class="row justify-content-center">
         <!--        <img alt="" class="mb-2" src="/images/logo_long_kr.jpg" width="100">-->
-        <p class="lead">홍삼지킴이</p>
+        <p class="lead">건강한 홍삼군</p>
         <small class="d-block mb-3 text-muted">© 2020</small>
     </div>
 </footer>

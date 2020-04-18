@@ -10,16 +10,15 @@
 <div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
     금산인삼 온라인매장 가입을 완료하려면 <a class="alert-link" th:href="@{/check-email}">계정 인증 이메일을 확인</a>하세요.
 </div>
-
 <!--메인 화면-->
 <div class="container">
     <div class="py-5 text-center">
         <h2>홍삼즙 온라인 주문을 위한 페이지</h2>
     </div>
-</div>
 
-<!-- 푸터-->
-<div th:replace="fragments.html :: footer"></div>
+    <!-- 푸터-->
+    <div th:replace="fragments.html :: footer"></div>
+</div>
 
 </body>
 </html>

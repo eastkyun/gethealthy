@@ -16,13 +16,15 @@
                 </button>
             </div>
             <div class="row">
-                <h2 class="col-12">알림 설정</h2>
+                <a th:href="@{'/profile/' + ${#authentication.name}}">
+                    <h2 class="col-sm-12" th:text="${account.nickname}">계정이름</h2>
+                </a>
             </div>
             <div class="row mt-3" th:fragment="profile-form">
                 <form class="col-12" action="#" th:action="@{/settings/notifications}" th:object="${notifications}" method="post" novalidate>
                     <div class="alert alert-light" role="alert">
-                        <strong><a href="#" th:href="@{/settings/locations}">주요 활동 지역</a>에
-                            <a href="#" th:href="@{/settings/keywords}">관심있는 주제</a>의 스터디가 만들어졌을 때</strong> 알림을 받을 방법을 설정하세요.
+                        <strong><a href="#" th:href="@{/settings/locations}">적당한 가격</a>에
+                            <a href="#" th:href="@{/settings/keywords}">관심있는 상품</a>의 리뷰가 작성됐을 때</strong> 알림을 받을 방법을 설정하세요.
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-switch custom-control-inline">
@@ -35,7 +37,7 @@
                         </div>
                     </div>
                     <div class="alert alert-light" role="alert">
-                        <strong>스터디 모임 참가 신청</strong> 결과 알림을 받을 방법을 설정하세요.
+                        <strong>주문 문의에 대한 </strong> 결과 알림을 받을 방법을 설정하세요.
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-switch custom-control-inline">
@@ -48,7 +50,7 @@
                         </div>
                     </div>
                     <div class="alert alert-light" role="alert">
-                        <strong>참여중인 스터디</strong>에 대한 알림을 받을 방법을 설정하세요.
+                        <strong>배송 상황</strong>에 대한 알림을 받을 방법을 설정하세요.
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-switch custom-control-inline">

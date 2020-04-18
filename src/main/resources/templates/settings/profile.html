@@ -27,7 +27,9 @@
             </div>
 
             <div class="row">
-                <h2 class="col-sm-12" th:text="${account.nickname}">계정이름</h2>
+                <a th:href="@{'/profile/' + ${#authentication.name}}">
+                    <h2 class="col-sm-12" th:text="${account.nickname}">계정이름</h2>
+                </a>
             </div>
             <div class="row mt-3">
                 <form class="col-sm-6" method="post" novalidate th:action="@{/settings/profile}" th:object="${profile}">
