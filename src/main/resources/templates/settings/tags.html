@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+
+<body class="bg-light">
+<!-- 네비게이션바-->
+<div th:replace="fragments.html :: main-nav"></div>
+
+<!--메일 인증 경고창-->
+<div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
+    금산인삼 온라인매장 가입을 완료하려면 <a class="alert-link" th:href="@{/check-email}">계정 인증 이메일을 확인</a>하세요.
+</div>
+
+<!--메인 화면-->
+<div class="container">
+    <!--  margin-top:5    -->
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <div th:replace="fragments.html :: settings-menu(currentMenu='tags')"></div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <h2 class="col-12">관심있는 스터디 주제</h2>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        참여하고 싶은 스터디 주제를 입력해 주세요. 해당 주제의 스터디가 생기면 알림을 받을 수 있습니다. 티그를 입력하고 콤마(,) 또는 엔터를 입력하세요
+                    </div>
+                    <input aria-describedby="tagHelp" class="tagify-outside" id="tags" name="tags" type="text">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 푸터-->
+    <div th:replace="fragments.html :: footer"></div>
+
+</div>
+
+<script src="/node_modules/@yaireo/tagify/dist/tagify.min.js"></script>
+<script type="application/javascript">
+    $(function() {
+       function tagRequest(url, tagTitle) {
+           $.ajax({
+               dataType:"json",
+               autocomplete:{
+                   enabled:true,
+                   rightKey:true,
+               },
+               contentType: "application/json; charset=utf-8",
+               method: "POST",
+               url:"/setting/tags"+url,
+               data: JSON.stringify({'tagTitle':tagTitle})
+           }).done(function(data, status){
+               console.log("$(data) and status is $(status)");
+           });
+       }
+        function onAdd(e) {
+            tagRequest("/add",e.detail.data.value);
+        }
+        function onRemove(e) {
+            tagRequest("/remove",e.detail.data.value);
+        }
+        var tagInput = document.querySelector("#tags");
+
+        tagify = new Tagify(tagInput, {
+            pattern: /^.{0,20}$/,  // Validate typed tag(s) by Regex. Here maximum chars length is defined as "20"
+            dropdown : {
+                enabled: 1,
+            }
+        });
+        tagify.on('add',onAdd);
+        tagify.on('remove',onRemove);
+        // add a class to Tagify's input element
+        tagify.DOM.input.classList.add('form-control');
+
+        // re-place Tagify's input element outside of the  element (tagify.DOM.scope), just before it
+        tagify.DOM.scope.parentNode.insertBefore(tagify.DOM.input, tagify.DOM.scope);
+    });
+</script>
+</body>
+</html>
