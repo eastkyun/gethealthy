@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+
+<body class="bg-light">
+<!--네비게이션바-->
+<div th:replace="fragments.html :: main-nav"></div>
+
+<!--이메일 확인시 에러있을때-->
+<div class="py-5 text-center" th:if="${error}">
+    <p class="lead">금산인삼 온라인매장 이메일 확인</p>
+    <div class="alert alert-danger" role="alert">
+        이메일 확인 링크가 정확하지 않습니다.
+    </div>
+</div>
+<!--이메일 확인 정상-->
+<div class="py-5 text-center" th:if="${error == null}">
+    <p class="lead">금산인삼 온라인매장 이메일 확인</p>
+    <h2>
+        이메일을 확인했습니다. <span th:text="${numberOfUser}"></span>번째 회원,
+        <span th:text="${nickname}" style="border-bottom: 2px #111111 solid"></span>님 가입을 축하합니다.
+    </h2>
+    <small class="text-info">이제부터 가입할 때 사용한 이메일 또는 닉네임과 패스워드로 로그인 할 수 있습니다.</small>
+    <p class="lead" th:text="${email}">your@email.com</p>
+</div>
+
+<!-- 푸터-->
+<div th:replace="fragments.html :: footer"></div>
+
+</body>
+</html>
