@@ -25,6 +25,9 @@
 
 </head>
 
+<div class="alert alert-warning" role="alert" th:fragment="mail-author-alert" th:if="${account != null && !account.emailVerified}">
+    금산인삼 온라인매장 가입을 완료하려면 <a class="alert-link" th:href="@{/check-email}">계정 인증 이메일을 확인</a>하세요.
+</div>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="main-nav">
     <a class="navbar-brand" href="/" th:href="@{/}">

@@ -2,26 +2,24 @@ package com.gethealthy.gethealthy.settings;
 
 import com.gethealthy.gethealthy.account.AccountService;
 import com.gethealthy.gethealthy.account.CurrentUser;
+import com.gethealthy.gethealthy.account.tag.TagRepository;
 import com.gethealthy.gethealthy.domain.Account;
-import com.gethealthy.gethealthy.settings.form.NicknameForm;
-import com.gethealthy.gethealthy.settings.form.Notifications;
-import com.gethealthy.gethealthy.settings.form.PasswordForm;
-import com.gethealthy.gethealthy.settings.form.Profile;
+import com.gethealthy.gethealthy.domain.Tag;
+import com.gethealthy.gethealthy.settings.form.*;
 import com.gethealthy.gethealthy.settings.validator.NicknameValidator;
 import com.gethealthy.gethealthy.settings.validator.PasswordFormValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class SettingsController {
@@ -48,6 +46,9 @@ public class SettingsController {
 
     @Autowired
     private PasswordFormValidator passwordFormValidator;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @InitBinder("passwordForm")
     public void passwordFormInitBinder(WebDataBinder webDataBinder){
@@ -121,6 +122,22 @@ public class SettingsController {
     public String updateTags(@CurrentUser Account account, Model model){
         model.addAttribute(account);
         return SETTINGS_TAGS_VIEW_NAME;
+    }
+    @PostMapping(SETTINGS_TAGS_URL+"/add")
+    @ResponseBody
+    public ResponseEntity addTags(@CurrentUser Account account, @RequestBody TagForm tagForm, Model model){
+        String title = tagForm.getTagTitle();
+//        Tag tag = tagRepository.findByTitle(title).orElseGet(() -> tagRepository.save(Tag.builder()
+//                .title(tagForm.getTagTitle())
+//                .build())); // Optional 쓸때
+        Tag tag = tagRepository.findByTitle(title);
+
+        if(tag ==null){
+            tagRepository.save(Tag.builder().title(tagForm.getTagTitle()).build());
+        }
+        accountService.addTag(account,tag);
+
+        return ResponseEntity.ok().build() ;
     }
 
 

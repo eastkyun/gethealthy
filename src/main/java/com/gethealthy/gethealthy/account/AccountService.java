@@ -2,6 +2,7 @@ package com.gethealthy.gethealthy.account;
 
 import com.gethealthy.gethealthy.account.form.SignUpForm;
 import com.gethealthy.gethealthy.domain.Account;
+import com.gethealthy.gethealthy.domain.Tag;
 import com.gethealthy.gethealthy.settings.form.Notifications;
 import com.gethealthy.gethealthy.settings.form.Profile;
 import org.modelmapper.ModelMapper;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -132,5 +134,10 @@ public class AccountService implements UserDetailsService {
         mailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
                 "&email=" + account.getEmail());
         javaMailSender.send(mailMessage);
+    }
+
+    public void addTag(Account account, Tag tag) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a->a.getTags().add(tag));
     }
 }
