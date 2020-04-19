@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/products")
 public class ProductsController {
     @GetMapping("/main")
-    public String products(@CurrentUser Account account, Model model){
-        if (account!=null) model.addAttribute(account);
-
+    public String products(Model model){
         return "products/main";
     }
 }
