@@ -26,6 +26,9 @@
                     <div class="alert alert-info" role="alert">
                         관심있는 상품을 입력해 주세요. 상품이 입고되면 알림을 받을 수 있습니다. 태그를 입력하고 콤마(,) 또는 엔터를 입력하세요
                     </div>
+                    <div id="whitelist" th:text="${whitelist}" hidden>
+
+                    </div>
                     <input aria-describedby="tagHelp" class="tagify-outside" th:value="${#strings.listJoin(tags,',')}"
                            id="tags" name="tags" type="text">
                 </div>
@@ -77,6 +80,7 @@
 
         tagify = new Tagify(tagInput, {
             pattern: /^.{0,20}$/,  // Validate typed tag(s) by Regex. Here maximum chars length is defined as "20"
+            whitelist : JSON.parse(document.querySelector("#whitelist").textContent),
             dropdown : {
                 enabled: 1,
             }
