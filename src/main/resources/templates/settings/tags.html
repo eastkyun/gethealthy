@@ -42,17 +42,8 @@
 
 </div>
 
+<script th:replace="fragments.html :: ajax-csrf-header"></script>
 <script src="/node_modules/@yaireo/tagify/dist/tagify.min.js"></script>
-<script type="application/javascript" th:inline="javascript">
-    $(function(){
-        var token = /*[[${_csrf.token}]]*/ null;
-        var header = /*[[${_csrf.headerName}]]*/ null;
-
-        $(document).ajaxSend(function(e,xhr,options){
-            xhr.setRequestHeader(header,token);
-        });
-    });
-</script>
 <script type="application/javascript">
     $(function() {
        function tagRequest(url, tagTitle) {

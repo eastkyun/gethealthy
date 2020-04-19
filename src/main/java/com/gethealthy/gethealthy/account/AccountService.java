@@ -3,6 +3,7 @@ package com.gethealthy.gethealthy.account;
 import com.gethealthy.gethealthy.account.form.SignUpForm;
 import com.gethealthy.gethealthy.domain.Account;
 import com.gethealthy.gethealthy.domain.Tag;
+import com.gethealthy.gethealthy.domain.Zone;
 import com.gethealthy.gethealthy.settings.form.Notifications;
 import com.gethealthy.gethealthy.settings.form.Profile;
 import org.modelmapper.ModelMapper;
@@ -150,5 +151,19 @@ public class AccountService implements UserDetailsService {
     public void removeTag(Account account, Tag tag) {
         Optional<Account> byId = accountRepository.findById(account.getId());
         byId.ifPresent(a->a.getTags().remove(tag));
+    }
+
+    public Set<Zone> getZones(Account account) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        return byId.orElseThrow().getZones();
+    }
+
+    public void addZone(Account account, Zone zone) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a->a.getZones().add(zone));
+    }
+    public void removeZone(Account account, Zone zone) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a->a.getZones().remove(zone));
     }
 }
