@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+
+<body class="bg-light">
+<!-- 네비게이션바-->
+<div th:replace="fragments.html :: main-nav"></div>
+
+<!--메일 인증 경고창-->
+<div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
+    금산인삼 온라인매장 가입을 완료하려면 <a class="alert-link" th:href="@{/check-email}">계정 인증 이메일을 확인</a>하세요.
+</div>
+<!--메인 화면-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <p class="lead mb-0">건강한 홍삼군 상품</p>
+            <small>전체 상품 {0} 개</small>
+        </div>
+        <div class="col-8">
+<!--            <p>건강한 홍삼군 상품</p>-->
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+
+            <div class="card-body">
+                <h5 class="card-title text-center">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center ">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center ">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center ">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center ">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center ">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center ">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+        <div class="card col-sm-2" style="width: 18rem;">
+            <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center ">홍삼즙</h5>
+                <hr>
+                <p class="card-text text-center">100,000</p>
+                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+        </div>
+        <div class="col-sm-2" style="width: 18rem;">
+        </div>
+        <div class="col-sm-2" style="width: 18rem;">
+
+        </div>
+    </div>
+
+
+    <!-- 푸터-->
+    <div th:replace="fragments.html :: footer"></div>
+</div>
+
+</body>
+</html>
