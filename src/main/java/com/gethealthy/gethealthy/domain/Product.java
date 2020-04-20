@@ -12,9 +12,14 @@ public class Product {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String name;
 
     private String price;
+
+    private String origin;
+
+    private Long amount;
 
     @Lob
     private String description;
