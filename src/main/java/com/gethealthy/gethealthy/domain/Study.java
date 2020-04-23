@@ -10,7 +10,7 @@ import java.util.Set;
 
 @NamedEntityGraph(
         name = "Study.withAll",attributeNodes ={
-        @NamedAttributeNode("tag"),
+        @NamedAttributeNode("tags"),
         @NamedAttributeNode("zones"),
         @NamedAttributeNode("managers"),
         @NamedAttributeNode("members")})
@@ -42,10 +42,10 @@ public class Study {
     private String image;
 
     @ManyToMany
-    private Set<Tag> tags;
+    private Set<Tag> tags= new HashSet<>();
 
     @ManyToMany
-    private Set<Zone> zones;
+    private Set<Zone> zones= new HashSet<>();
 
     private LocalDateTime publishedDateTime;
 
@@ -64,6 +64,7 @@ public class Study {
     public void addManager(Account account) {
         this.managers.add(account);
     }
+
     public boolean isJoinable(UserAccount userAccount) {
         Account account = userAccount.getAccount();
         return this.isPublished() && this.isRecruiting()
@@ -79,4 +80,7 @@ public class Study {
         return this.managers.contains(userAccount.getAccount());
     }
 
+    public void addMemeber(Account account) {
+        this.members.add(account);
+    }
 }
