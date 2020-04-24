@@ -1,8 +1,8 @@
-package com.gethealthy.gethealthy.settings.validator;
+package com.gethealthy.gethealthy.mypage.validator;
 
 import com.gethealthy.gethealthy.account.AccountRepository;
-import com.gethealthy.gethealthy.domain.Account;
-import com.gethealthy.gethealthy.settings.form.NicknameForm;
+import com.gethealthy.gethealthy.account.Account;
+import com.gethealthy.gethealthy.mypage.form.NicknameForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

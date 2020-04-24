@@ -1,6 +1,6 @@
-package com.gethealthy.gethealthy.settings.validator;
+package com.gethealthy.gethealthy.mypage.validator;
 
-import com.gethealthy.gethealthy.settings.form.PasswordForm;
+import com.gethealthy.gethealthy.mypage.form.PasswordForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

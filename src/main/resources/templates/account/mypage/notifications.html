@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row mt-5 justify-content-center">
         <div class="col-2">
-            <div th:replace="fragments.html :: settings-menu(currentMenu='notifications')"></div>
+            <div th:replace="fragments.html :: mypage-menu(currentMenu='notifications')"></div>
         </div>
         <div class="col-8">
             <div th:if="${message}" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
@@ -16,12 +16,12 @@
                 </button>
             </div>
             <div class="row">
-                <a th:href="@{'/profile/' + ${#authentication.name}}">
+                <a th:href="@{'/mypage/' + ${#authentication.name}}">
                     <h2 class="col-sm-12" th:text="${account.nickname}">계정이름</h2>
                 </a>
             </div>
             <div class="row mt-3" th:fragment="profile-form">
-                <form class="col-12" action="#" th:action="@{/settings/notifications}" th:object="${notifications}" method="post" novalidate>
+                <form class="col-12" action="#" th:action="@{/mypage/notifications}" th:object="${notifications}" method="post" novalidate>
                     <div class="alert alert-light" role="alert">
                         <strong><a href="#" th:href="@{/settings/locations}">적당한 가격</a>에
                             <a href="#" th:href="@{/settings/keywords}">관심있는 상품</a>의 리뷰가 작성됐을 때</strong> 알림을 받을 방법을 설정하세요.

@@ -16,7 +16,7 @@
     <!--  margin-top:5    -->
     <div class="row mt-5 justify-content-center">
         <div class="col-2">
-            <div th:replace="fragments.html :: settings-menu(currentMenu='profile')"></div>
+            <div th:replace="fragments.html :: mypage-menu(currentMenu='profile')"></div>
         </div>
         <div class="col-8">
             <div class="alert alert-info alert-dismissible fade show mt-3" role="alert" th:if="${message}">
@@ -32,7 +32,7 @@
                 </a>
             </div>
             <div class="row mt-3">
-                <form class="col-sm-6" method="post" novalidate th:action="@{/settings/profile}" th:object="${profile}">
+                <form class="col-sm-6" method="post" novalidate th:action="@{/mypage/profile}" th:object="${profile}">
                     <div class="form-group">
                         <label for="bio">한 줄 소개</label>
                         <input aria-describedby="bioHelp" class="form-control" id="bio" placeholder="간략한 소개를 부탁드립니다."
@@ -182,31 +182,31 @@
         });
 
         $resetBtn.click(function () {
-           $currentProfileImage.show();
-           $newProfileImage.hide();
-           $resultImage.hide();
-           $resetBtn.hide();
-           $cutBtn.hide();
-           $confirmBtn.hide();
-           $profileImage.val('');
+            $currentProfileImage.show();
+            $newProfileImage.hide();
+            $resultImage.hide();
+            $resetBtn.hide();
+            $cutBtn.hide();
+            $confirmBtn.hide();
+            $profileImage.val('');
         });
 
         $cutBtn.click(function(){
-           let dataUrl = cropper.getCroppedCanvas().toDataURL();
-           let newImage = document.createElement("img");
-           newImage.id="cropped-new-profile-image";
-           newImage.src=dataUrl;
-           newImage.width=125;
-           $resultImage.html(newImage);
-           $resultImage.show();
-           $confirmBtn.show();
+            let dataUrl = cropper.getCroppedCanvas().toDataURL();
+            let newImage = document.createElement("img");
+            newImage.id="cropped-new-profile-image";
+            newImage.src=dataUrl;
+            newImage.width=125;
+            $resultImage.html(newImage);
+            $resultImage.show();
+            $confirmBtn.show();
 
-           $confirmBtn.click(function () {
-              $newProfileImage.html(newImage);
-              $cutBtn.hide();
-              $confirmBtn.hide();
-              $profileImage.val(dataUrl);
-           });
+            $confirmBtn.click(function () {
+                $newProfileImage.html(newImage);
+                $cutBtn.hide();
+                $confirmBtn.hide();
+                $profileImage.val(dataUrl);
+            });
         });
     });
 </script>

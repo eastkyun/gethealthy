@@ -1,6 +1,5 @@
 package com.gethealthy.gethealthy.products;
 
-import com.gethealthy.gethealthy.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;

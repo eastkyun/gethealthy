@@ -1,8 +1,8 @@
-package com.gethealthy.gethealthy.settings;
+package com.gethealthy.gethealthy.mypage;
 
 import com.gethealthy.gethealthy.WithAccount;
 import com.gethealthy.gethealthy.account.AccountRepository;
-import com.gethealthy.gethealthy.domain.Account;
+import com.gethealthy.gethealthy.account.Account;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ class SettingsControllerTest {
     @Test
     void updateProfileForm() throws Exception{
         String bio = "짧은 소개를 수정하는 경우";
-        mockMvc.perform(get(SettingsController.SETTINGS_PROFILE_URL))
+        mockMvc.perform(get(MyPageController.MYPAGE_PROFILE_URL))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("profile"));
@@ -53,11 +53,11 @@ class SettingsControllerTest {
     @Test
     void updateProfile() throws Exception{
         String bio = "짧은 소개를 수정하는 경우";
-        mockMvc.perform(post(SettingsController.SETTINGS_PROFILE_URL)
+        mockMvc.perform(post(MyPageController.MYPAGE_PROFILE_URL)
                 .param("bio",bio)
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(SettingsController.SETTINGS_PROFILE_URL))
+                .andExpect(redirectedUrl(MyPageController.MYPAGE_PROFILE_URL))
                 .andExpect(flash().attributeExists("message"));
         Account dongkyun = accountRepository.findByNickname("dongkyun");
         assertEquals(bio, dongkyun.getBio());
@@ -69,11 +69,11 @@ class SettingsControllerTest {
     @Test
     void updateProfile_with_error() throws Exception{
         String bio = "길게 소개를 수정하는 경우 길게 소개를 수정하는 경우 길게 소개를 수정하는 경우 길게 소개를 수정하는 경우 길게 소개를 수정하는 경우 길게 소개를 수정하는 경우";
-        mockMvc.perform(post(SettingsController.SETTINGS_PROFILE_URL)
+        mockMvc.perform(post(MyPageController.MYPAGE_PROFILE_URL)
                 .param("bio",bio)
                 .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(view().name(SettingsController.SETTINGS_PROFILE_VIEW_NAME))
+                .andExpect(view().name(MyPageController.MYPAGE_PROFILE_VIEW_NAME))
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("profile"))
                 .andExpect(model().hasErrors());
@@ -86,7 +86,7 @@ class SettingsControllerTest {
     @DisplayName("패스워드 수정 폼")
     @Test
     void updatePassword_form() throws Exception{
-        mockMvc.perform(get(SettingsController.SETTINGS_PASSWORD_URL))
+        mockMvc.perform(get(MyPageController.MYPAGE_PASSWORD_URL))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("passwordForm"));
@@ -96,12 +96,12 @@ class SettingsControllerTest {
     @DisplayName("패스워드 수정하기 - 입력값 정상")
     @Test
     void updatePassword_success() throws Exception{
-        mockMvc.perform(post(SettingsController.SETTINGS_PASSWORD_URL)
+        mockMvc.perform(post(MyPageController.MYPAGE_PASSWORD_URL)
                 .param("newPassword","123412341234")
                 .param("newPasswordConfirm","123412341234")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(SettingsController.SETTINGS_PASSWORD_URL))
+                .andExpect(redirectedUrl(MyPageController.MYPAGE_PASSWORD_URL))
                 .andExpect(flash().attributeExists("message"));
 
         Account dongkyun = accountRepository.findByNickname("dongkyun");
@@ -111,12 +111,12 @@ class SettingsControllerTest {
     @DisplayName("패스워드 수정하기 - 입력값 불일치")
     @Test
     void updatePassword_fail() throws Exception{
-        mockMvc.perform(post(SettingsController.SETTINGS_PASSWORD_URL)
+        mockMvc.perform(post(MyPageController.MYPAGE_PASSWORD_URL)
                 .param("newPassword","123412341234")
                 .param("newPasswordConfirm","121111111114")
                 .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(view().name(SettingsController.SETTINGS_PASSWORD_VIEW_NAME))
+                .andExpect(view().name(MyPageController.MYPAGE_PASSWORD_VIEW_NAME))
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("passwordForm"))
                 .andExpect(model().attributeExists("account"));

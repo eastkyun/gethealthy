@@ -2,7 +2,6 @@ package com.gethealthy.gethealthy.account;
 
 import com.gethealthy.gethealthy.account.form.SignUpForm;
 import com.gethealthy.gethealthy.account.validator.SignUpFormValidator;
-import com.gethealthy.gethealthy.domain.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,7 +85,7 @@ public class AccountController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile/{nickname}")
+    @GetMapping("/mypage/{nickname}")
     public String viewProfile(@PathVariable String nickname, Model model, @CurrentUser Account account){
         Account byNickname = accountRepository.findByNickname(nickname);
         if(byNickname==null) {

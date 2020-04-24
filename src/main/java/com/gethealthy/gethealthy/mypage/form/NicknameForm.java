@@ -1,4 +1,4 @@
-package com.gethealthy.gethealthy.settings.form;
+package com.gethealthy.gethealthy.mypage.form;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

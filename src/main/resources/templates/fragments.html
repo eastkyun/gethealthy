@@ -82,18 +82,18 @@
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" hr  ef="#" th:href="@{/settings/cart}">
+                    <a class="nav-link" hr  ef="#" th:href="@{/mypage/cart}">
 <!--                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>-->
                         CART
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" hr  ef="#" th:href="@{'/settings/order'}">
+                    <a class="nav-link" hr  ef="#" th:href="@{'/mypage/order'}">
                         ORDER
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" hr  ef="#" th:href="@{'/profile/' + ${#authentication.name}}">
+                    <a class="nav-link" hr  ef="#" th:href="@{'/mypage/' + ${#authentication.name}}">
                         MYPAGE
                     </a>
                 </li>
@@ -144,7 +144,7 @@
                     </a>
                 </div>
                 <div class="col-md-auto">
-                    <a class="nav-menu-custom-a-tag text-center" th:href="@{/products/main}">
+                    <a class="nav-menu-custom-a-tag text-center" th:href="@{/products}">
                         PRODUCT
                     </a>
                 </div>
@@ -166,21 +166,29 @@
     </div>
 </footer>
 
-<div class="list-group" th:fragment="settings-menu (currentMenu)">
-    <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'profile'}? active"
-       th:href="@{/settings/profile}">프로필</a>
-    <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'password'}? active"
-       th:href="@{/settings/password}">패스워드</a>
-    <a class="list-group-item list-group-item-action" href="#"
-       th:classappend="${currentMenu == 'notifications'}? active" th:href="@{/settings/notifications}">알림</a>
+<div class="list-group" th:fragment="mypage-menu (currentMenu)">
     <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'cart'}? active"
-       th:href="@{/settings/cart}">장바구니</a>
+       th:href="@{/mypage/cart}">장바구니</a>
     <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'order'}? active"
-       th:href="@{/settings/order}">주문내역</a>
+       th:href="@{/mypage/order}">주문내역</a>
+    <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'profile'}? active"
+       th:href="@{/mypage/profile}">프로필</a>
+    <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'password'}? active"
+       th:href="@{/mypage/password}">패스워드</a>
+    <a class="list-group-item list-group-item-action" href="#"
+       th:classappend="${currentMenu == 'notifications'}? active" th:href="@{/mypage/notifications}">알림</a>
     <a class="list-group-item list-group-item-action list-group-item-danger"
-       href="#" th:classappend="${currentMenu == 'account'}? active" th:href="@{/settings/account}">계정</a>
+       href="#" th:classappend="${currentMenu == 'account'}? active" th:href="@{/mypage/account}">계정</a>
 </div>
-
+<script type="application/javascript" th:inline="javascript" th:fragment="ajax-csrf-header">
+    $(function() {
+        var csrfToken = /*[[${_csrf.token}]]*/ null;
+        var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        });
+    });
+</script>
 <script th:fragment="form-validation" type="application/javascript">
     (function () {
         'use strict';

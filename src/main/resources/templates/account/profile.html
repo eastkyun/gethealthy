@@ -47,8 +47,7 @@
 
                 <a class="nav-link" id="v-pills-study-tab" data-toggle="pill" href="#v-pills-study"
                    role="tab" aria-controls="v-pills-study" aria-selected="false">
-                    스터디
-
+                    관심 리스트
                 </a>
             </div>
 
@@ -95,23 +94,23 @@
                         <span th:text="${#temporals.format(account.joinedAt, 'yyyy년 M월 가입')}" class="col-9"></span>
                     </p>
                     <div th:if="${isOwner}">
-                        <a class="btn btn-outline-primary" th:href="@{/settings/profile}">프로필 수정</a>
+                        <a class="btn btn-outline-primary" th:href="@{/mypage/profile}">프로필 수정</a>
                     </div>
 
 
                 </div>
                 <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-intro-tab">
-                    Study
+                    하트 표시한 상품
                 </div>
             </div>
 
         </div>
     </div>
 
-</div>
+    <!-- 푸터-->
+    <div th:replace="fragments.html :: footer"></div>
 
-<!-- 푸터-->
-<div th:replace="fragments.html :: footer"></div>
+</div>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.gethealthy.gethealthy.domain;
+package com.gethealthy.gethealthy.products;
 
 import lombok.*;
 

@@ -1,9 +1,8 @@
 package com.gethealthy.gethealthy.account;
 
 import com.gethealthy.gethealthy.account.form.SignUpForm;
-import com.gethealthy.gethealthy.domain.Account;
-import com.gethealthy.gethealthy.settings.form.Notifications;
-import com.gethealthy.gethealthy.settings.form.Profile;
+import com.gethealthy.gethealthy.mypage.form.Notifications;
+import com.gethealthy.gethealthy.mypage.form.Profile;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
