@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gethealthy.gethealthy.account.AccountService;
 import com.gethealthy.gethealthy.account.CurrentUser;
-import com.gethealthy.gethealthy.account.tag.TagRepository;
+import com.gethealthy.gethealthy.tag.TagRepository;
 import com.gethealthy.gethealthy.domain.Account;
 import com.gethealthy.gethealthy.domain.Tag;
 import com.gethealthy.gethealthy.domain.Zone;
@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 

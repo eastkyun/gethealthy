@@ -5,6 +5,7 @@ import com.gethealthy.gethealthy.domain.Account;
 import com.gethealthy.gethealthy.domain.Study;
 import com.gethealthy.gethealthy.study.form.StudyForm;
 import com.gethealthy.gethealthy.study.validator.StudyFormValidator;
+import com.gethealthy.gethealthy.tag.TagService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,6 @@ public class StudyController {
 
     @Autowired
     private StudyService studyService;
-
-    @Autowired
-    private StudyRepository studyRepository;
 
     @Autowired
     private ModelMapper modelMapper;

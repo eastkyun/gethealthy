@@ -1,4 +1,4 @@
-package com.gethealthy.gethealthy.account.tag;
+package com.gethealthy.gethealthy.tag;
 
 import com.gethealthy.gethealthy.domain.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
