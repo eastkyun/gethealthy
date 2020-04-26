@@ -6,6 +6,8 @@ import com.gethealthy.gethealthy.account.AccountService;
 import com.gethealthy.gethealthy.account.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/products")
 public class ProductsController {
     @Autowired
     private ProductRepository productRepository;
@@ -24,13 +25,13 @@ public class ProductsController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("")
-    public String products(Model model) throws JsonProcessingException {
-        List<Product> productList = productRepository.findAll();
-        model.addAttribute(productList);
+    @GetMapping("/products")
+    public String getProducts(Model model, Pageable pageable) {
+        Page<Product> productPage = productRepository.findAll(pageable);
+        model.addAttribute("productList",productPage.toList());
         return "products/index";
     }
-    @GetMapping("/details/{name}")
+    @GetMapping("/products/details/{name}")
     public String productDetails(@PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
         if(product==null){
