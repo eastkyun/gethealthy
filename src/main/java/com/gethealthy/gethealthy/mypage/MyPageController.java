@@ -76,7 +76,7 @@ public class MyPageController {
         }
         accountService.updateProfile(account, profile);
         attributes.addFlashAttribute("message","프로필을 수정했습니다.");
-        return "redirect:/"+ MYPAGE_PROFILE_VIEW_NAME;
+        return "redirect:"+ MYPAGE_PROFILE_URL;
     }
 
     @GetMapping(MYPAGE_PASSWORD_URL)
@@ -95,7 +95,7 @@ public class MyPageController {
         }
         accountService.updatePassword(account,passwordForm.getNewPassword());
         attributes.addFlashAttribute("message","패스워드를 변경했습니다.");
-        return "redirect:/"+ MYPAGE_PASSWORD_VIEW_NAME;
+        return "redirect:"+ MYPAGE_PASSWORD_URL;
 
     }
 
@@ -116,7 +116,7 @@ public class MyPageController {
         accountService.updateNotifications(account,notifications);
         attributes.addFlashAttribute("message","알림 설정을 변경했습니다.");
 
-        return "redirect:/"+ MYPAGE_NOTIFICATIONS_VIEW_NAME;
+        return "redirect:"+ MYPAGE_NOTIFICATIONS_URL;
     }
 
     @GetMapping(MYPAGE_ACCOUNT_URL)
@@ -134,7 +134,7 @@ public class MyPageController {
         }
         accountService.updateNickname(account, nicknameForm.getNickname());
         attributes.addFlashAttribute("message","닉네임을 수정했습니다.");
-        return "redirect:/"+MYPAGE_ACCOUNT_VIEW_NAME;
+        return "redirect:"+MYPAGE_ACCOUNT_URL;
     }
 
     // 장바구니
