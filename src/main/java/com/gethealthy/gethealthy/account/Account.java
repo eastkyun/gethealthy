@@ -1,9 +1,13 @@
 package com.gethealthy.gethealthy.account;
 
+import com.gethealthy.gethealthy.cart.Cart;
+import com.gethealthy.gethealthy.order.Ordering;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -52,6 +56,12 @@ public class Account {
     private boolean studyUpdatedByEmail;
 
     private boolean studyUpdatedByWeb;
+
+    @OneToOne
+    private Cart cart;
+
+    @OneToMany
+    private Set<Ordering> orders = new HashSet<>();
 
     private LocalDateTime emailCheckTokenGenerateAt;
     public void generateEmailCheckToken() {
