@@ -3,6 +3,7 @@ package com.gethealthy.gethealthy.account;
 import com.gethealthy.gethealthy.account.form.SignUpForm;
 import com.gethealthy.gethealthy.mypage.form.Notifications;
 import com.gethealthy.gethealthy.mypage.form.Profile;
+import com.gethealthy.gethealthy.products.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -47,7 +49,7 @@ public class AccountService implements UserDetailsService {
     }
 
     private Account saveNewAccount(@ModelAttribute @Valid SignUpForm signUpForm) {
-         Account account = Account.builder()
+        Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
                 .password(passwordEncoder.encode(signUpForm.getPassword())) // Todo Encoding 할 것
@@ -131,5 +133,15 @@ public class AccountService implements UserDetailsService {
         mailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
                 "&email=" + account.getEmail());
         javaMailSender.send(mailMessage);
+    }
+
+    public void addProductInCart(Account account, Product product) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getCart().add(product));
+    }
+
+    public void removeProductInCart(Account account, Product product) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getCart().remove(product));
     }
 }

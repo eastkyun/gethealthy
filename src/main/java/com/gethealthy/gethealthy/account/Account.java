@@ -1,12 +1,10 @@
 package com.gethealthy.gethealthy.account;
 
-import com.gethealthy.gethealthy.cart.Cart;
-import com.gethealthy.gethealthy.order.Ordering;
+import com.gethealthy.gethealthy.products.Product;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,6 +40,9 @@ public class Account {
 
     private String liveAround;
 
+    @OneToMany
+    private Set<Product> cart;
+
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 
@@ -56,12 +57,6 @@ public class Account {
     private boolean studyUpdatedByEmail;
 
     private boolean studyUpdatedByWeb;
-
-    @OneToOne
-    private Cart cart;
-
-    @OneToMany
-    private Set<Ordering> orders = new HashSet<>();
 
     private LocalDateTime emailCheckTokenGenerateAt;
     public void generateEmailCheckToken() {
