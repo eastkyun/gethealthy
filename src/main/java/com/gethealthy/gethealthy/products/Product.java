@@ -22,6 +22,8 @@ public class Product {
 
     private Long amount;
 
+    private Integer liked;
+
     @OneToOne
     private Account seller;
 
