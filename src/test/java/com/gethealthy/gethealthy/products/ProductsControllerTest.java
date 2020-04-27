@@ -112,7 +112,7 @@ class ProductsControllerTest {
     @Test
     public void increaseLiked() throws Exception {
 
-        mockMvc.perform(post("/홍삼즙/liked/increase")
+        mockMvc.perform(get("/홍삼즙/liked/increase")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk());
@@ -126,12 +126,12 @@ class ProductsControllerTest {
     @Test
     public void decreaseLiked() throws Exception {
 
-        mockMvc.perform(post("/홍삼즙/liked/increase")
+        mockMvc.perform(get("/홍삼즙/liked/increase")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(post("/홍삼즙/liked/decrease")
+        mockMvc.perform(get("/홍삼즙/liked/decrease")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk());

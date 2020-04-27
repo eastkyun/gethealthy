@@ -61,20 +61,15 @@ public class ProductsController {
         return ResponseEntity.ok().build() ;
     }
 
-    @PostMapping("{name}/liked/increase")
-    @ResponseBody
+    @GetMapping("{name}/liked/increase")
     public ResponseEntity increaseLike(@CurrentUser Account account,@PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
-        System.out.println("========================");
-        System.out.println(product.getName() + " " + product.getLiked());
-        System.out.println("========================");
         productService.increaseLiked(product);
         accountService.addLikedProduct(account, product);
         return ResponseEntity.ok().build() ;
     }
 
-    @PostMapping("{name}//liked/decrease")
-    @ResponseBody
+    @GetMapping("{name}/liked/decrease")
     public ResponseEntity decreaseLike(@CurrentUser Account account, @PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
         productService.decreaseLiked(product);
