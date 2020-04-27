@@ -108,6 +108,28 @@ class ProductsControllerTest {
     }
 
     @WithAccount("dongkyun")
+    @DisplayName("홍삼즙 : 좋아요 토글")
+    @Test
+    public void Liked() throws Exception {
+
+        mockMvc.perform(get("/홍삼즙/liked")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()))
+                .andExpect(status().isOk());
+        Product product = productRepository.findByName("홍삼즙");
+        assertEquals(product.getName(),"홍삼즙");
+        assertEquals(1,product.getLiked());
+
+        mockMvc.perform(get("/홍삼즙/liked")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()))
+                .andExpect(status().isOk());
+        Product product1 = productRepository.findByName("홍삼즙");
+        assertEquals(product1.getName(),"홍삼즙");
+        assertEquals(0,product1.getLiked());
+    }
+
+    @WithAccount("dongkyun")
     @DisplayName("홍삼즙 : 좋아요 증가")
     @Test
     public void increaseLiked() throws Exception {

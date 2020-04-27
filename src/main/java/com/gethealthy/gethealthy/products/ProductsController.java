@@ -60,7 +60,23 @@ public class ProductsController {
         accountService.removeProductInCart(account, product);
         return ResponseEntity.ok().build() ;
     }
+    @GetMapping("{name}/liked")
+    public ResponseEntity like(@CurrentUser Account account,@PathVariable String name, Model model){
+        Account user = accountRepository.findByNickname(account.getNickname());
+        Product product = productRepository.findByName(name);
 
+        if(user.getLikedList().contains(product)){
+            System.out.println("좋아요 취소");
+            productService.decreaseLiked(product);
+            accountService.removeLikedProduct(account, product);
+        }
+        else{
+            System.out.println("좋아요");
+            productService.increaseLiked(product);
+            accountService.addLikedProduct(account, product);
+        }
+        return ResponseEntity.ok().build() ;
+    }
     @GetMapping("{name}/liked/increase")
     public ResponseEntity increaseLike(@CurrentUser Account account,@PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
