@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductsController {
@@ -26,7 +27,8 @@ public class ProductsController {
     private AccountRepository accountRepository;
     @Autowired
     private AccountService accountService;
-
+    @Autowired
+    private ProductService productService;
     @GetMapping("/products")
     public String getProducts(Model model, Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
@@ -47,11 +49,6 @@ public class ProductsController {
     public ResponseEntity addProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model){
         String name = productForm.getName();
         Product product = productRepository.findByName(name);
-//        if(accountRepository.findByCartContains(productForm.getName())){
-//            System.out.println("이미 장바구니에 있습니다.");
-//            return ResponseEntity.badRequest().build();
-//        }
-
         accountService.addProductInCart(account, product);
         return ResponseEntity.ok().build() ;
     }
@@ -63,4 +60,26 @@ public class ProductsController {
         accountService.removeProductInCart(account, product);
         return ResponseEntity.ok().build() ;
     }
+
+    @PostMapping("{name}/liked/increase")
+    @ResponseBody
+    public ResponseEntity increaseLike(@CurrentUser Account account,@PathVariable String name, Model model){
+        Product product = productRepository.findByName(name);
+        System.out.println("========================");
+        System.out.println(product.getName() + " " + product.getLiked());
+        System.out.println("========================");
+        productService.increaseLiked(product);
+        accountService.addLikedProduct(account, product);
+        return ResponseEntity.ok().build() ;
+    }
+
+    @PostMapping("{name}//liked/decrease")
+    @ResponseBody
+    public ResponseEntity decreaseLike(@CurrentUser Account account, @PathVariable String name, Model model){
+        Product product = productRepository.findByName(name);
+        productService.decreaseLiked(product);
+        accountService.removeLikedProduct(account, product);
+        return ResponseEntity.ok().build() ;
+    }
+
 }

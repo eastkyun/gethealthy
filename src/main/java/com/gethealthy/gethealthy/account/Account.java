@@ -44,6 +44,9 @@ public class Account {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Product> cart = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Product> likedList = new HashSet<>();
+
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 

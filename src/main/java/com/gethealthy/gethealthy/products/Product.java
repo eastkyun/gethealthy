@@ -22,7 +22,7 @@ public class Product {
 
     private Long amount;
 
-    private Integer liked;
+    private Long liked;
 
     @OneToOne
     private Account seller;

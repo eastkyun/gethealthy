@@ -144,4 +144,14 @@ public class AccountService implements UserDetailsService {
         Optional<Account> byId = accountRepository.findById(account.getId());
         byId.ifPresent(a -> a.getCart().remove(product));
     }
+
+    public void addLikedProduct(Account account, Product product) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a->a.getLikedList().add(product));
+    }
+
+    public void removeLikedProduct(Account account, Product product) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a->a.getLikedList().remove(product));
+    }
 }
