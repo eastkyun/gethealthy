@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -40,8 +41,8 @@ public class Account {
 
     private String liveAround;
 
-    @OneToMany
-    private Set<Product> cart;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Product> cart = new HashSet<>();
 
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage;

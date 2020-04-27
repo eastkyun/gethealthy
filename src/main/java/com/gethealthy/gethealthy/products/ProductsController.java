@@ -2,6 +2,7 @@ package com.gethealthy.gethealthy.products;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gethealthy.gethealthy.account.Account;
+import com.gethealthy.gethealthy.account.AccountRepository;
 import com.gethealthy.gethealthy.account.AccountService;
 import com.gethealthy.gethealthy.account.CurrentUser;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,8 @@ public class ProductsController {
     private ProductRepository productRepository;
     @Autowired
     private ModelMapper modelMapper;
-
+    @Autowired
+    private AccountRepository accountRepository;
     @Autowired
     private AccountService accountService;
 
@@ -45,6 +47,11 @@ public class ProductsController {
     public ResponseEntity addProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model){
         String name = productForm.getName();
         Product product = productRepository.findByName(name);
+//        if(accountRepository.findByCartContains(productForm.getName())){
+//            System.out.println("이미 장바구니에 있습니다.");
+//            return ResponseEntity.badRequest().build();
+//        }
+
         accountService.addProductInCart(account, product);
         return ResponseEntity.ok().build() ;
     }
