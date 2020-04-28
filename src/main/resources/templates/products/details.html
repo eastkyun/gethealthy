@@ -26,7 +26,7 @@
             <a th:href="@{/mypage/cart}" class="btn btn-info">장바구니</a>
 
             <script type="text/javascript" src="/js/heart_btn.js"></script>
-            <i onclick="changeHeart(this)" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></i>
+            <a th:href="@{{name}/liked(name=${productForm.name})}" onclick="changeHeart(this)" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
         </div>
 
     </div>
