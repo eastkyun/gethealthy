@@ -21,9 +21,12 @@
             <p class="lead">원산지 : <span th:text="${productForm.origin}"></span></p>
             <p class="lead">용량 : 1개 &times; <span th:text="${productForm.amount}"></span>팩</p>
             <p class="lead">가격 : <span th:text="${productForm.price}"></span></p>
-            <p th:if="${productForm.numberOf}<5"> 품절 임박</p>
+            <p style="color:red" th:if="${productForm.numberOf}<5"> 품절 임박</p>
             <a th:href="@{/order}" class="btn btn-info">주문하기</a>
             <a th:href="@{/mypage/cart}" class="btn btn-info">장바구니</a>
+
+            <script type="text/javascript" src="/js/heart_btn.js"></script>
+            <i onclick="changeHeart(this)" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></i>
         </div>
 
     </div>
