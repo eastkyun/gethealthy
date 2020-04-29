@@ -1,9 +1,12 @@
 package com.gethealthy.gethealthy.account;
 
+import com.gethealthy.gethealthy.products.Product;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -37,6 +40,12 @@ public class Account {
     private String location;
 
     private String liveAround;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Product> cart = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Product> likedList = new HashSet<>();
 
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage;

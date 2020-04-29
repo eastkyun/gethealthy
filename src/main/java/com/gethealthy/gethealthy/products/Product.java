@@ -1,5 +1,6 @@
 package com.gethealthy.gethealthy.products;
 
+import com.gethealthy.gethealthy.account.Account;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,10 +22,13 @@ public class Product {
 
     private Long amount;
 
+    private Long liked;
+
+    @OneToOne
+    private Account seller;
+
     @Lob
     private String description;
-
-
     private String numberOf;
 
     @Lob
