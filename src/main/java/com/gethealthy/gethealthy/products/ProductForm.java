@@ -11,13 +11,18 @@ public class ProductForm {
 
     private String price;
 
+
     private String description;
 
     private String origin;
+
+    private Long liked;
 
     private String numberOf;
 
     private Long amount;
 
     private String productImage;
+
+
 }

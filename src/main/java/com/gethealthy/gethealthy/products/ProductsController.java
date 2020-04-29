@@ -36,17 +36,19 @@ public class ProductsController {
         return "products/index";
     }
     @GetMapping("/products/details/{name}")
-    public String productDetails(@PathVariable String name, Model model){
+    public String productDetails(@CurrentUser Account account, @PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
-
         if(product==null){
             return "redirect:/products/main";
         }
-//        if(account != null){
-//            System.out.println("==============================");
-//            System.out.println(accountRepository.existsByLikedList(product));
-//            System.out.println("==============================");
-//        }
+        if (account!=null){
+            model.addAttribute(account);
+            if(accountRepository.existsByLikedList(product)){
+                model.addAttribute("isLiked",true);
+            }else{
+                model.addAttribute("isLiked",false);
+            }
+        }
 
         model.addAttribute(modelMapper.map(product, ProductForm.class));
         return "products/details";
@@ -100,7 +102,7 @@ public class ProductsController {
             accountService.addLikedProduct(account, product);
         }
         model.addAttribute(productForm);
-        return ResponseEntity.ok().build() ;
+        return ResponseEntity.ok().build();
     }
     @GetMapping("{name}/liked/increase")
     public ResponseEntity increaseLike(@CurrentUser Account account,@PathVariable String name, Model model){
