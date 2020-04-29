@@ -44,9 +44,9 @@ public class ProductsController {
         if (account!=null){
             model.addAttribute(account);
             if(accountRepository.existsByLikedList(product)){
-                model.addAttribute("isLiked",true);
+                model.addAttribute("isLiked","true");
             }else{
-                model.addAttribute("isLiked",false);
+                model.addAttribute("isLiked","false");
             }
         }
 
@@ -69,55 +69,22 @@ public class ProductsController {
         accountService.removeProductInCart(account, product);
         return ResponseEntity.ok().build() ;
     }
-    @GetMapping("{name}/liked")
-    public String like(@CurrentUser Account account,@PathVariable String name, Model model){
-        Account user = accountRepository.findByNickname(account.getNickname());
-        Product product = productRepository.findByName(name);
-
-        if(user.getLikedList().contains(product)){
-            System.out.println("좋아요 취소");
-            productService.decreaseLiked(product);
-            accountService.removeLikedProduct(account, product);
-        }
-        else{
-            System.out.println("좋아요");
-            productService.increaseLiked(product);
-            accountService.addLikedProduct(account, product);
-        }
-        return "products/details";
-    }
     @PostMapping("{name}/liked")
+    @ResponseBody
     public ResponseEntity likedProduct(@CurrentUser Account account, ProductForm productForm, Model model, @PathVariable String name){
         Account user = accountRepository.findByNickname(account.getNickname());
         Product product = productRepository.findByName(productForm.getName());
 
         if(user.getLikedList().contains(product)){
-            System.out.println("좋아요 취소");
             productService.decreaseLiked(product);
             accountService.removeLikedProduct(account, product);
         }
         else{
-            System.out.println("좋아요");
             productService.increaseLiked(product);
             accountService.addLikedProduct(account, product);
         }
         model.addAttribute(productForm);
         return ResponseEntity.ok().build();
-    }
-    @GetMapping("{name}/liked/increase")
-    public ResponseEntity increaseLike(@CurrentUser Account account,@PathVariable String name, Model model){
-        Product product = productRepository.findByName(name);
-        productService.increaseLiked(product);
-        accountService.addLikedProduct(account, product);
-        return ResponseEntity.ok().build() ;
-    }
-
-    @GetMapping("{name}/liked/decrease")
-    public ResponseEntity decreaseLike(@CurrentUser Account account, @PathVariable String name, Model model){
-        Product product = productRepository.findByName(name);
-        productService.decreaseLiked(product);
-        accountService.removeLikedProduct(account, product);
-        return ResponseEntity.ok().build() ;
     }
 
 }

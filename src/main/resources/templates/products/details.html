@@ -24,8 +24,13 @@
             <p style="color:red" th:if="${productForm.numberOf}<5"> 품절 임박</p>
             <a th:href="@{/order}" class="btn btn-info">주문하기</a>
             <a th:href="@{/mypage/cart}" class="btn btn-info">장바구니</a>
-            <span sec:authorize="isAuthenticated()" th:if="account!=null">
-                    <a id="heart" th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
+            <span id="heart" sec:authorize="isAuthenticated()" th:if="account!=null">
+                <span th:if="${isLiked=='true'}">
+                    <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart"></a>
+                </span>
+                <span th:if="${isLiked=='false'}">
+                    <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
+                </span>
             </span>
 
         </div>
@@ -93,7 +98,7 @@
                 //좋아요 DB에서 제거
             }
         }
-        heart = document.querySelector("#heart");
+        heart = document.querySelector("#heart a");
         changeHeart(heart);
 
 
