@@ -38,9 +38,16 @@ public class ProductsController {
     @GetMapping("/products/details/{name}")
     public String productDetails(@PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
+
         if(product==null){
             return "redirect:/products/main";
         }
+//        if(account != null){
+//            System.out.println("==============================");
+//            System.out.println(accountRepository.existsByLikedList(product));
+//            System.out.println("==============================");
+//        }
+
         model.addAttribute(modelMapper.map(product, ProductForm.class));
         return "products/details";
     }

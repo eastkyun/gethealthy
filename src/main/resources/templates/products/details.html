@@ -24,24 +24,11 @@
             <p style="color:red" th:if="${productForm.numberOf}<5"> 품절 임박</p>
             <a th:href="@{/order}" class="btn btn-info">주문하기</a>
             <a th:href="@{/mypage/cart}" class="btn btn-info">장바구니</a>
-            <script type="text/javascript" src="/js/heart_btn.js"></script>
-            <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
+            <span sec:authorize="isAuthenticated()">
+                <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
+            </span>
 
-            <script th:replace="fragments.html :: ajax-csrf-header"></script>
-            <script type="application/javascript" th:inline="javascript">
-                    function likedRequest(productName) {
-                        $.ajax({
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                            method: "POST",
-                            url: "/" + productName +"/liked",
-                            data: {"product" : productName},
-                        }).done(function (data, status) {
-                            console.log("${data} and status is ${status}");
-                        });
 
-                };
-            </script>
         </div>
     </div>
 
@@ -79,5 +66,25 @@
     <div th:replace="fragments.html :: footer"></div>
 </div>
 
+
+<script th:replace="fragments.html :: ajax-csrf-header"></script>
+<script type="application/javascript" th:inline="javascript">
+    function likedRequest(productName) {
+        $.ajax({
+            dataType: "json",
+            autocomplete: {
+                enabled: true,
+                rightKey: true,
+            },
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "/" + productName +"/liked",
+            data: JSON.stringify({"product" : productName}),
+        }).done(function (data, status) {
+            console.log("${data} and status is ${status}");
+        });
+
+    };
+</script>
 </body>
 </html>
