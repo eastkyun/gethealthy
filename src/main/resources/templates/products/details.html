@@ -25,7 +25,23 @@
             <a th:href="@{/order}" class="btn btn-info">주문하기</a>
             <a th:href="@{/mypage/cart}" class="btn btn-info">장바구니</a>
             <script type="text/javascript" src="/js/heart_btn.js"></script>
-            <a th:href="@{{name}/liked(name=${productForm.name})}" onclick="changeHeart(this)" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
+            <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
+
+            <script th:replace="fragments.html :: ajax-csrf-header"></script>
+            <script type="application/javascript" th:inline="javascript">
+                    function likedRequest(productName) {
+                        $.ajax({
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            method: "POST",
+                            url: "/" + productName +"/liked",
+                            data: {"product" : productName},
+                        }).done(function (data, status) {
+                            console.log("${data} and status is ${status}");
+                        });
+
+                };
+            </script>
         </div>
     </div>
 
