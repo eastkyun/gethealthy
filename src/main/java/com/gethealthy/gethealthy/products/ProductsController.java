@@ -61,7 +61,7 @@ public class ProductsController {
         return ResponseEntity.ok().build() ;
     }
     @GetMapping("{name}/liked")
-    public ResponseEntity like(@CurrentUser Account account,@PathVariable String name, Model model){
+    public String like(@CurrentUser Account account,@PathVariable String name, Model model){
         Account user = accountRepository.findByNickname(account.getNickname());
         Product product = productRepository.findByName(name);
 
@@ -75,6 +75,24 @@ public class ProductsController {
             productService.increaseLiked(product);
             accountService.addLikedProduct(account, product);
         }
+        return "products/details";
+    }
+    @PostMapping("{name}/liked")
+    public ResponseEntity likedProduct(@CurrentUser Account account, ProductForm productForm, Model model, @PathVariable String name){
+        Account user = accountRepository.findByNickname(account.getNickname());
+        Product product = productRepository.findByName(productForm.getName());
+
+        if(user.getLikedList().contains(product)){
+            System.out.println("좋아요 취소");
+            productService.decreaseLiked(product);
+            accountService.removeLikedProduct(account, product);
+        }
+        else{
+            System.out.println("좋아요");
+            productService.increaseLiked(product);
+            accountService.addLikedProduct(account, product);
+        }
+        model.addAttribute(productForm);
         return ResponseEntity.ok().build() ;
     }
     @GetMapping("{name}/liked/increase")
