@@ -1,6 +1,7 @@
 package com.gethealthy.gethealthy.community;
 
 import com.gethealthy.gethealthy.account.Account;
+import com.gethealthy.gethealthy.products.Product;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,5 +43,6 @@ public class Post {
     @Basic(fetch = FetchType.EAGER)
     private String productImage;
 
-
+    @OneToOne
+    private Product product;
 }

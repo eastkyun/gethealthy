@@ -5,13 +5,18 @@ import com.gethealthy.gethealthy.account.Account;
 import com.gethealthy.gethealthy.account.AccountRepository;
 import com.gethealthy.gethealthy.account.AccountService;
 import com.gethealthy.gethealthy.account.CurrentUser;
+import com.gethealthy.gethealthy.community.Post;
+import com.gethealthy.gethealthy.community.PostRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +34,10 @@ public class ProductsController {
     private AccountService accountService;
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private PostRepository postRepository;
+
     @GetMapping("/products")
     public String getProducts(Model model, Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
@@ -36,10 +45,13 @@ public class ProductsController {
         return "products/index";
     }
     @GetMapping("/products/details/{name}")
-    public String productDetails(@CurrentUser Account account, @PathVariable String name, Model model){
+    public String productDetails(@CurrentUser Account account, @PathVariable String name,
+                                 @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
+                                 Pageable pageable, Model model, Errors errors){
         Product product = productRepository.findByName(name);
         if(product==null){
-            return "redirect:/products/main";
+            errors.rejectValue("wrong.product","wrong.product","해당 상품이 없습니다.");
+            return "redirect:/products";
         }
         if (account!=null){
             model.addAttribute(account);
@@ -49,7 +61,8 @@ public class ProductsController {
                 model.addAttribute("isLiked","false");
             }
         }
-
+        Page<Post> reviews = postRepository.findAllByCategoryAndProduct((long) 3, product, pageable);
+        model.addAttribute("reviews", reviews);
         model.addAttribute(modelMapper.map(product, ProductForm.class));
         return "products/details";
     }
