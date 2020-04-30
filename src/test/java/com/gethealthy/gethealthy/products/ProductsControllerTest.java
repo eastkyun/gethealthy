@@ -152,9 +152,10 @@ class ProductsControllerTest {
 //                .param("page","0")
 //                .param("size","10")
 //                .param("sort","created")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(productForm))
-                .with(csrf()))
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsString(productForm))
+//                .with(csrf())
+        )
                 .andDo(print())
                 .andExpect(model().attributeExists("reviews"))
                 .andExpect(status().isOk());

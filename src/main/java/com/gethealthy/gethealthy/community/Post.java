@@ -3,6 +3,7 @@ package com.gethealthy.gethealthy.community;
 import com.gethealthy.gethealthy.account.Account;
 import com.gethealthy.gethealthy.products.Product;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class Post {
     private Long category;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String contents;
 
     private LocalDateTime created=LocalDateTime.now();
@@ -43,4 +45,6 @@ public class Post {
     @Basic(fetch = FetchType.EAGER)
     private String productImage;
 
+    @ManyToOne
+    private Product product;
 }

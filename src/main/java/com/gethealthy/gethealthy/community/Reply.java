@@ -2,6 +2,7 @@ package com.gethealthy.gethealthy.community;
 
 import com.gethealthy.gethealthy.account.Account;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Reply {
     private Account author;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String contents;
 
     private Long liked;
