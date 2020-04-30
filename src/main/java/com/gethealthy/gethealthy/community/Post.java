@@ -43,6 +43,4 @@ public class Post {
     @Basic(fetch = FetchType.EAGER)
     private String productImage;
 
-    @OneToOne
-    private Product product;
 }
