@@ -31,7 +31,7 @@ public class Post {
     @Lob
     private String contents;
 
-    private LocalDateTime created;
+    private LocalDateTime created=LocalDateTime.now();
 
     @ManyToOne
     private Account author;

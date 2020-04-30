@@ -47,12 +47,9 @@ public class ProductsController {
     @GetMapping("/products/details/{name}")
     public String productDetails(@CurrentUser Account account, @PathVariable String name,
                                  @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
-                                 Pageable pageable, Model model, Errors errors){
+                                 Pageable pageable, Model model){
         Product product = productRepository.findByName(name);
-        if(product==null){
-            errors.rejectValue("wrong.product","wrong.product","해당 상품이 없습니다.");
-            return "redirect:/products";
-        }
+        if(product==null){return "redirect:/products";}
         if (account!=null){
             model.addAttribute(account);
             if(accountRepository.existsByLikedList(product)){
@@ -61,7 +58,7 @@ public class ProductsController {
                 model.addAttribute("isLiked","false");
             }
         }
-        Page<Post> reviews = postRepository.findAllByCategoryAndProduct((long) 3, product, pageable);
+        Page<Post> reviews = postRepository.findAllByCategoryAndProduct(3L, product, pageable);
         model.addAttribute("reviews", reviews);
         model.addAttribute(modelMapper.map(product, ProductForm.class));
         return "products/details";

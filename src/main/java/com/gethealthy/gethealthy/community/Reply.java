@@ -22,5 +22,5 @@ public class Reply {
 
     private Long liked;
 
-    private LocalDateTime created;
+    private LocalDateTime created=LocalDateTime.now();
 }
