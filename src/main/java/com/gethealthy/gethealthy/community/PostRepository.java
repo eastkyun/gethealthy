@@ -1,0 +1,13 @@
+package com.gethealthy.gethealthy.community;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+@Repository
+@Transactional(readOnly = true)
+public interface PostRepository extends JpaRepository<Post,Long> {
+     Page<Post> findAllByCategory(Long category, Pageable pageable);
+}

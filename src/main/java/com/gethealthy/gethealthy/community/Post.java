@@ -20,6 +20,11 @@ public class Post {
 
     private Long liked;
 
+    /*
+    * 1 : 공지사항
+    * 2 : QnA
+    * 3 : 리뷰
+    * */
     private Long category;
 
     @Lob
