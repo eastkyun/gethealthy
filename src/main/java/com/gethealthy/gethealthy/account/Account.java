@@ -1,5 +1,7 @@
 package com.gethealthy.gethealthy.account;
 
+import com.gethealthy.gethealthy.community.Post;
+import com.gethealthy.gethealthy.community.Reply;
 import com.gethealthy.gethealthy.products.Product;
 import lombok.*;
 
@@ -46,6 +48,12 @@ public class Account {
 
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Product> likedList = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Post> posts = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Reply> replies = new HashSet<>();
 
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage;
