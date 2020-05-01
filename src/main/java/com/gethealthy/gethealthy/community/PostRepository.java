@@ -11,4 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface PostRepository extends JpaRepository<Post,Long> {
      Page<Post> findAllByCategoryAndProduct(Long category, Product product , Pageable pageable);
+     Page<Post> findAllByCategory(Long category, Pageable pageable);
+
 }
