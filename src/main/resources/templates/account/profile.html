@@ -100,7 +100,10 @@
 
                 </div>
                 <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-intro-tab">
-                    하트 표시한 상품
+                    <!--                        <p th:text="${#strings.listJoin(likedList, ', ')}"></p>-->
+                    <div th:each="likeItem : ${likedList}">
+                            <p th:text="${likeItem}"></p>
+                    </div>
                 </div>
             </div>
 

@@ -4,6 +4,7 @@ import com.gethealthy.gethealthy.products.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Transactional(readOnly = true)
@@ -17,7 +18,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findByNickname(String nickname);
 
     boolean existsByLikedList(Product product);
-
-
 
 }
