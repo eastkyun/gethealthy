@@ -98,7 +98,7 @@ public class AccountController {
         if(byNickname==null) {
             throw new IllegalArgumentException(nickname+"에 해당하는 사용자가 없습니다.");
         }
-        model.addAttribute("likedList",byNickname.getLikedList().stream().map(Product::getName).collect(Collectors.toList()));
+        model.addAttribute("likedList",byNickname.getLikedList());
         model.addAttribute(byNickname); // byNickname의 타입의 낙타 표기법으로 view에 전달
         model.addAttribute("isOwner", byNickname.equals(account));
 
