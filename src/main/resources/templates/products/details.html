@@ -23,7 +23,8 @@
             <p class="lead">가격 : <span th:text="${productForm.price}"></span></p>
             <p style="color:red" th:if="${productForm.numberOf}<5"> 품절 임박</p>
             <button th:href="@{/order}" class="btn btn-info">주문하기</button>
-            <button class="btn btn-info" data-toggle="modal" data-target="#myCart">장바구니</button>
+            <button class="btn btn-info"  th:onclick="addCart([[${productForm.name}]]);"
+                    data-toggle="modal" data-target="#myCart">장바구니</button>
 
             <!-- The Modal -->
             <div class="modal" id="myCart">
@@ -89,9 +90,17 @@
                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     상품 소개
                 </div>
-                <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-intro-tab">
-                    후기
+                <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-intro-tab"
+                     th:each="review : ${reviews}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${review.getAuthor().nickname}">Special title treatment </h5>
+                            <span th:text="${review.created}"></span> 좋아요: <span th:text="${review.liked}"></span>
+                            <p class="card-text" th:text="${review.contents}">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
         </div>
@@ -132,6 +141,22 @@
         changeHeart(heart);
 
 
+    };
+</script>
+<script type="application/javascript" th:inline="javascript">
+    function addCart(productForm) {
+        $.ajax({
+            dataType: "json",
+            autocomplete: {
+                enabled: true,
+                rightKey: true,
+            },
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "/cart/add/"+productForm,
+            data: JSON.stringify({"product" : productForm}),
+        }).done(function (data, status) {
+        });
     };
 </script>
 </body>

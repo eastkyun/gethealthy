@@ -1,6 +1,7 @@
 package com.gethealthy.gethealthy.products;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gethealthy.gethealthy.account.Account;
 import com.gethealthy.gethealthy.account.AccountRepository;
 import com.gethealthy.gethealthy.account.AccountService;
@@ -34,7 +35,8 @@ public class ProductsController {
     private AccountService accountService;
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private PostRepository postRepository;
 
@@ -63,18 +65,18 @@ public class ProductsController {
         model.addAttribute(modelMapper.map(product, ProductForm.class));
         return "products/details";
     }
-    @PostMapping("/cart/add")
+    @PostMapping("/cart/add/{name}")
     @ResponseBody
-    public ResponseEntity addProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model){
-        String name = productForm.getName();
+    public ResponseEntity addProductInCart(@CurrentUser Account account, ProductForm productForm,
+                                           @PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
         accountService.addProductInCart(account, product);
         return ResponseEntity.ok().build() ;
     }
-    @PostMapping("/cart/remove")
+    @PostMapping("/cart/remove/{name}")
     @ResponseBody
-    public ResponseEntity removeProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model){
-        String name = productForm.getName();
+    public ResponseEntity removeProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm,
+                                              @PathVariable String name, Model model){
         Product product = productRepository.findByName(name);
         accountService.removeProductInCart(account, product);
         return ResponseEntity.ok().build() ;
@@ -84,7 +86,6 @@ public class ProductsController {
     public ResponseEntity likedProduct(@CurrentUser Account account, ProductForm productForm, Model model, @PathVariable String name){
         Account user = accountRepository.findByNickname(account.getNickname());
         Product product = productRepository.findByName(productForm.getName());
-
         if(user.getLikedList().contains(product)){
             productService.decreaseLiked(product);
             accountService.removeLikedProduct(account, product);
