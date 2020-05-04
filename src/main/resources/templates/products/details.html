@@ -22,17 +22,47 @@
             <p class="lead">용량 : 1개 &times; <span th:text="${productForm.amount}"></span>팩</p>
             <p class="lead">가격 : <span th:text="${productForm.price}"></span></p>
             <p style="color:red" th:if="${productForm.numberOf}<5"> 품절 임박</p>
-            <a th:href="@{/order}" class="btn btn-info">주문하기</a>
-            <a th:href="@{/mypage/cart}" class="btn btn-info">장바구니</a>
-            <span id="heart" sec:authorize="isAuthenticated()" th:if="account!=null">
-                <span th:if="${isLiked=='true'}">
-                    <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart"></a>
-                </span>
-                <span th:if="${isLiked=='false'}">
-                    <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px;" class="btn btn-info fa fa-heart-o"></a>
-                </span>
-            </span>
+            <button th:href="@{/order}" class="btn btn-info">주문하기</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#myCart">장바구니</button>
 
+            <!-- The Modal -->
+            <div class="modal" id="myCart">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h6 class="modal-title">장바구니 담기</h6>
+                            <button class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            장바구니에 상품이 정상적으로 담겼습니다.
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class= "modal-footer">
+                            <a th:href="@{/mypage/cart}" class="btn btn-info">장바구니 이동</a>
+                            <button data-dismiss="modal" class="btn btn-secondary">쇼핑계속하기</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--좋아요버튼-->
+            <div class="tooltip_btn">
+
+                <span id="heart" sec:authorize="isAuthenticated()" th:if="account!=null">
+                    <span th:if="${isLiked=='true'}">
+                        <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart"></a>
+                    </span>
+                    <span th:if="${isLiked=='false'}">
+                        <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart-o"></a>
+                    </span>
+                </span>
+                <span class="tooltiptext">&#x2661; 12개</span>
+            </div>
         </div>
     </div>
 
