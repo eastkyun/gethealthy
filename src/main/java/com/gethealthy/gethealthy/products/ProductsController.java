@@ -54,7 +54,7 @@ public class ProductsController {
         if(product==null){return "redirect:/products";}
         if (account!=null){
             model.addAttribute(account);
-            if(accountRepository.existsByLikedList(product)){
+            if(accountRepository.existsByLikedListAndId(product,account.getId())){
                 model.addAttribute("isLiked","true");
             }else{
                 model.addAttribute("isLiked","false");
