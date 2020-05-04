@@ -62,7 +62,8 @@
                         <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart-o"></a>
                     </span>
                 </span>
-                <span class="tooltiptext">&#x2661; 12개</span>
+
+                <span id="num_like" class="tooltiptext" th:text="'&#x2661;'+${productForm.liked}"></span>
             </div>
         </div>
     </div>
@@ -130,11 +131,16 @@
             if(state.classList.contains("fa-heart-o")){
                 state.classList.remove("fa-heart-o");
                 state.classList.add("fa-heart");
-                //좋아요 DB에 추가
+
+                number = Number(document.querySelector('#num_like').textContent.slice(1))+1;
+                document.getElementById("num_like").innerHTML = '&#x2661;' + number;
+
             }else{
                 state.classList.remove("fa-heart");
                 state.classList.add("fa-heart-o");
-                //좋아요 DB에서 제거
+
+                number = Number(document.querySelector('#num_like').textContent.slice(1))-1;
+                document.getElementById("num_like").innerHTML = '&#x2661;' + number;
             }
         }
         heart = document.querySelector("#heart a");
