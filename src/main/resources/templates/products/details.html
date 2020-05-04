@@ -51,15 +51,18 @@
             </div>
 
             <!--좋아요버튼-->
-            <span id="heart" sec:authorize="isAuthenticated()" th:if="account!=null">
-                <span th:if="${isLiked=='true'}">
-                    <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart"></a>
-                </span>
-                <span th:if="${isLiked=='false'}">
-                    <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart-o"></a>
-                </span>
-            </span>
+            <div class="tooltip_btn">
 
+                <span id="heart" sec:authorize="isAuthenticated()" th:if="account!=null">
+                    <span th:if="${isLiked=='true'}">
+                        <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart"></a>
+                    </span>
+                    <span th:if="${isLiked=='false'}">
+                        <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart-o"></a>
+                    </span>
+                </span>
+                <span class="tooltiptext">&#x2661; 12개</span>
+            </div>
         </div>
     </div>
 
