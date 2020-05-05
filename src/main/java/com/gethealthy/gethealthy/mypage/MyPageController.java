@@ -141,6 +141,7 @@ public class MyPageController {
     @GetMapping(MYPAGE_CART_URL)
     public String cartList(@CurrentUser Account account, Model model){
         model.addAttribute(account);
+        model.addAttribute("cartList",account.getCart());
         return MYPAGE_CART_VIEW_NAME;
     }
 
