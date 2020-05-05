@@ -1,10 +1,8 @@
 package com.gethealthy.gethealthy.community;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gethealthy.gethealthy.WithAccount;
-import com.gethealthy.gethealthy.account.Account;
 import com.gethealthy.gethealthy.products.Product;
-import com.gethealthy.gethealthy.products.ProductForm;
+import com.gethealthy.gethealthy.products.form.ProductForm;
 import com.gethealthy.gethealthy.products.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 

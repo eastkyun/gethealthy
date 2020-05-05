@@ -6,6 +6,7 @@ import com.gethealthy.gethealthy.account.Account;
 import com.gethealthy.gethealthy.account.AccountRepository;
 import com.gethealthy.gethealthy.community.Post;
 import com.gethealthy.gethealthy.community.PostRepository;
+import com.gethealthy.gethealthy.products.form.ProductForm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 

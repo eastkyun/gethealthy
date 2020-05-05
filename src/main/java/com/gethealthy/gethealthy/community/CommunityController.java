@@ -3,8 +3,6 @@ package com.gethealthy.gethealthy.community;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gethealthy.gethealthy.account.Account;
 import com.gethealthy.gethealthy.account.CurrentUser;
-import com.gethealthy.gethealthy.products.Product;
-import com.gethealthy.gethealthy.products.ProductForm;
 import com.gethealthy.gethealthy.products.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class CommunityController {

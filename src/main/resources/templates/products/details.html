@@ -110,8 +110,10 @@
     <div th:replace="fragments.html :: footer"></div>
 </div>
 
+<div sec:authorize="isAuthenticated()">
+    <script th:replace="fragments.html :: ajax-csrf-header"></script>
+</div>
 
-<script th:replace="fragments.html :: ajax-csrf-header"></script>
 <script type="application/javascript" th:inline="javascript">
     function likedRequest(productName) {
         $.ajax({
@@ -122,8 +124,8 @@
             },
             contentType: "application/json; charset=utf-8",
             method: "POST",
-            url: "/" + productName +"/liked",
-            data: JSON.stringify({"product" : productName}),
+            url: "/liked",
+            data: JSON.stringify({"name" : productName}),
         }).done(function (data, status) {
         });
         var heart;
@@ -154,15 +156,15 @@
         $.ajax({
             dataType: "json",
             autocomplete: {
-                enabled: true,
-                rightKey: true,
-            },
-            contentType: "application/json; charset=utf-8",
-            method: "POST",
-            url: "/cart/add/"+productForm,
-            data: JSON.stringify({"product" : productForm}),
-        }).done(function (data, status) {
-        });
+    enabled: true,
+        rightKey: true,
+    },
+    contentType: "application/json; charset=utf-8",
+        method: "POST",
+        url: "/cart/add",
+        data: JSON.stringify({"name" : productForm}),
+    }).done(function (data, status) {
+    });
     };
 </script>
 </body>

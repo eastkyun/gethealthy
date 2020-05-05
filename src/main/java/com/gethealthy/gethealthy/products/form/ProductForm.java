@@ -1,4 +1,4 @@
-package com.gethealthy.gethealthy.products;
+package com.gethealthy.gethealthy.products.form;
 
 import lombok.Data;
 
@@ -10,7 +10,6 @@ public class ProductForm {
     private String name;
 
     private String price;
-
 
     private String description;
 
