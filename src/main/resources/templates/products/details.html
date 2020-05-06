@@ -156,15 +156,15 @@
         $.ajax({
             dataType: "json",
             autocomplete: {
-    enabled: true,
-        rightKey: true,
-    },
-    contentType: "application/json; charset=utf-8",
-        method: "POST",
-        url: "/cart/add",
-        data: JSON.stringify({"name" : productForm}),
-    }).done(function (data, status) {
-    });
+                enabled: true,
+                rightKey: true,
+            },
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "/cart/add",
+            data: JSON.stringify({"name" : productForm}),
+        }).done(function (data, status) {
+        });
     };
 </script>
 </body>
