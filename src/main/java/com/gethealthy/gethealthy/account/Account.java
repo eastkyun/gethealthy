@@ -11,6 +11,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@NamedEntityGraph(name = "Account.withAll",attributeNodes ={
+        @NamedAttributeNode("likedList"),
+        @NamedAttributeNode("cart"),
+        @NamedAttributeNode("posts"),
+        @NamedAttributeNode("replies")
+})
 @Entity
 @Getter @Setter @EqualsAndHashCode(of="id")
 @Builder @AllArgsConstructor @NoArgsConstructor

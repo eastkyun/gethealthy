@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@NamedEntityGraph(name = "Post.withAll",attributeNodes ={
+        @NamedAttributeNode("replies")
+})
 @Entity
 @Getter @Setter @EqualsAndHashCode(of="id")
 @Builder @AllArgsConstructor @NoArgsConstructor
@@ -38,7 +41,7 @@ public class Post {
     @ManyToOne
     private Account author;
 
-    @OneToMany
+    @ManyToMany
     private Set<Reply> replies = new HashSet<>();
 
     @Lob

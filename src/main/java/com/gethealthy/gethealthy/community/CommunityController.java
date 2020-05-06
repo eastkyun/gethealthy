@@ -41,12 +41,9 @@ public class CommunityController {
                                 @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
                                         Pageable pageable){
         if(account!=null) model.addAttribute(account);
-        Page<Post> noticePage = postRepository.findAllByCategory(1L, pageable);
-        model.addAttribute(noticePage);
-        Page<Post> qnaPage = postRepository.findAllByCategory(2L, pageable);
-        model.addAttribute(qnaPage);
-        Page<Post> reviewPage = postRepository.findAllByCategory(3L, pageable);
-        model.addAttribute(reviewPage);
+        Page<Post> postPage = postRepository.findAll(pageable);
+        model.addAttribute(postPage);
+
         return Community_MAIN_VIEW_NAME;
     }
 

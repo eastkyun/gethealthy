@@ -1,6 +1,7 @@
 package com.gethealthy.gethealthy.account;
 
 import com.gethealthy.gethealthy.products.Product;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +14,11 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     boolean existsByNickname(String nickname);
 
+    @EntityGraph(value = "Account.withAll",type = EntityGraph.EntityGraphType.LOAD)
     Account findByEmail(String s);
-
+    @EntityGraph(value = "Account.withAll",type = EntityGraph.EntityGraphType.LOAD)
     Account findByNickname(String nickname);
 
     boolean existsByLikedListAndId(Product product, Long id);
-
+    
 }
