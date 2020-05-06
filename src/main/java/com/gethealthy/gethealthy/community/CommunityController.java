@@ -3,6 +3,7 @@ package com.gethealthy.gethealthy.community;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gethealthy.gethealthy.account.Account;
 import com.gethealthy.gethealthy.account.CurrentUser;
+import com.gethealthy.gethealthy.community.form.PostForm;
 import com.gethealthy.gethealthy.products.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 public class CommunityController {
@@ -25,6 +30,8 @@ public class CommunityController {
     static final String Community_QNA_URL = "/community/qna";
     static final String Community_QNA_VIEW_NAME = "community/qna";
 
+    @Autowired
+    private PostService postService;
     @Autowired
     private PostRepository postRepository;
 
@@ -76,6 +83,42 @@ public class CommunityController {
         Page<Post> noticePage = postRepository.findAllByCategory(2L, pageable);
         model.addAttribute(noticePage);
         return Community_QNA_VIEW_NAME;
+    }
+    @GetMapping(Community_MAIN_URL+"detail/{id}")
+    public String postDetail(@PathVariable Long id, Model model){
+        Optional<Post> post = postRepository.findById(id);
+        model.addAttribute(post);
+        return "community/detail";
+    }
+    @GetMapping(Community_MAIN_URL+"detail/{id}/update")
+    public String postFormForUpdate(@PathVariable Long id, Model model){
+        Optional<Post> post = postRepository.findById(id);
+        model.addAttribute(post);
+        return "community/update";
+    }
+    @PostMapping("/post/update")
+    public String updatePost(@CurrentUser Account account, RedirectAttributes attributes,
+                             @RequestBody PostForm postForm, Errors errors, Model model){
+//        TODO update post
+        return "redirect:/community";
+    }
+    @PostMapping("/post/create")
+    @ResponseBody
+    public String createPost(@CurrentUser Account account, RedirectAttributes attributes,
+                             @RequestBody PostForm postForm, Errors errors, Model model){
+        Post post = modelMapper.map(postForm, Post.class);
+        postService.createPost(account, post);
+        attributes.addFlashAttribute("message","작성되었습니다.");
+        return "redirect:/community";
+    }
+    @PostMapping("/post/remove")
+    @ResponseBody
+    public String removePost(@CurrentUser Account account, RedirectAttributes attributes,
+                             @RequestBody PostForm postForm, Errors errors, Model model){
+        Post post = modelMapper.map(postForm, Post.class);
+        postService.deletePost(account, post);
+        attributes.addFlashAttribute("message","삭제되었습니다.");
+        return "redirect:/community";
     }
 
 }

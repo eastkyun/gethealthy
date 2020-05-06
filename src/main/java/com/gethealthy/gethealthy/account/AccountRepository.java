@@ -20,5 +20,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findByNickname(String nickname);
 
     boolean existsByLikedListAndId(Product product, Long id);
-    
+
 }
