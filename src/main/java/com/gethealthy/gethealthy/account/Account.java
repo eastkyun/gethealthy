@@ -43,16 +43,16 @@ public class Account {
 
     private String liveAround;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Product> cart = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Product> likedList = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Post> posts = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Reply> replies = new HashSet<>();
 
     @Lob @Basic(fetch = FetchType.EAGER)
