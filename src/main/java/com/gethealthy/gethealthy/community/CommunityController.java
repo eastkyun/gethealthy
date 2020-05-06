@@ -61,7 +61,7 @@ public class CommunityController {
                                  Pageable pageable){
         if(account!=null) model.addAttribute(account);
         Page<Post> noticePage = postRepository.findAllByCategory(1L, pageable);
-        model.addAttribute(noticePage);
+        model.addAttribute("notices",noticePage);
         return Community_NOTICE_VIEW_NAME;
     }
 
@@ -70,8 +70,8 @@ public class CommunityController {
                          @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
                                  Pageable pageable){
         if(account!=null) model.addAttribute(account);
-        Page<Post> noticePage = postRepository.findAllByCategory(3L, pageable);
-        model.addAttribute(noticePage);
+        Page<Post> reviewPage = postRepository.findAllByCategory(3L, pageable);
+        model.addAttribute("reviews",reviewPage);
         return Community_REVIEW_VIEW_NAME;
     }
 
@@ -80,8 +80,8 @@ public class CommunityController {
                       @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
                               Pageable pageable){
         if(account!=null) model.addAttribute(account);
-        Page<Post> noticePage = postRepository.findAllByCategory(2L, pageable);
-        model.addAttribute(noticePage);
+        Page<Post> qnaPage = postRepository.findAllByCategory(2L, pageable);
+        model.addAttribute("qnaPage",qnaPage);
         return Community_QNA_VIEW_NAME;
     }
     @GetMapping(Community_MAIN_URL+"detail/{id}")
@@ -97,27 +97,30 @@ public class CommunityController {
         return "community/update";
     }
     @PostMapping("/post/update")
-    public String updatePost(@CurrentUser Account account, RedirectAttributes attributes,
-                             @RequestBody PostForm postForm, Errors errors, Model model){
+    public String updatePost(@CurrentUser Account account, @RequestBody PostForm postForm,
+                             Errors errors, Model model){
 //        TODO update post
         return "redirect:/community";
     }
     @PostMapping("/post/create")
-    @ResponseBody
-    public String createPost(@CurrentUser Account account, RedirectAttributes attributes,
-                             @RequestBody PostForm postForm, Errors errors, Model model){
+    public String createPost(@CurrentUser Account account, @RequestBody PostForm postForm,
+                             Errors errors, RedirectAttributes attributes){
         Post post = modelMapper.map(postForm, Post.class);
         postService.createPost(account, post);
         attributes.addFlashAttribute("message","작성되었습니다.");
-        return "redirect:/community";
+        return "redirect:"+Community_MAIN_URL+"/detail/"+post.getId();
     }
     @PostMapping("/post/remove")
-    @ResponseBody
-    public String removePost(@CurrentUser Account account, RedirectAttributes attributes,
-                             @RequestBody PostForm postForm, Errors errors, Model model){
-        Post post = modelMapper.map(postForm, Post.class);
+    public String removePost(@CurrentUser Account account, @RequestBody PostForm postForm,
+                             Errors errors, RedirectAttributes attributes){
+//        Post post = modelMapper.map(postForm, Post.class);
+        Post post = postRepository.findByTitle(postForm.getTitle());
+        if (post==null) {
+            errors.rejectValue("wrong.post","post.notFound","잘못된 요청입니다.");
+            return Community_MAIN_VIEW_NAME;
+        }
         postService.deletePost(account, post);
-        attributes.addFlashAttribute("message","삭제되었습니다.");
+        attributes.addAttribute("message","삭제되었습니다.");
         return "redirect:/community";
     }
 
