@@ -84,17 +84,29 @@ public class CommunityController {
         model.addAttribute("qnaPage",qnaPage);
         return Community_QNA_VIEW_NAME;
     }
+
     @GetMapping(Community_MAIN_URL+"detail/{id}")
-    public String postDetail(@PathVariable Long id, Model model){
+    public String postDetail(@CurrentUser Account account,@PathVariable Long id, Model model){
+        if(account!=null){
+            model.addAttribute(account);
+        }
         Optional<Post> post = postRepository.findById(id);
         model.addAttribute(post);
         return "community/detail";
     }
+    @GetMapping(Community_MAIN_URL+"create")
+    public String postFormForCreate(@CurrentUser Account account, Model model){
+        PostForm postForm = new PostForm();
+        model.addAttribute(account);
+        model.addAttribute(postForm);
+        return "community/form";
+    }
     @GetMapping(Community_MAIN_URL+"detail/{id}/update")
-    public String postFormForUpdate(@PathVariable Long id, Model model){
+    public String postFormForUpdate(@CurrentUser Account account, @PathVariable Long id, Model model){
         Optional<Post> post = postRepository.findById(id);
+        model.addAttribute(account);
         model.addAttribute(post);
-        return "community/update";
+        return "community/form";
     }
     @PostMapping("/post/update")
     public String updatePost(@CurrentUser Account account, @RequestBody PostForm postForm,
