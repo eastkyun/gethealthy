@@ -62,20 +62,18 @@ public class ProductsController {
         return "products/details";
     }
     @PostMapping("/cart/add")
-    @ResponseBody
-    public ResponseEntity addProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model) {
+    public String addProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model) {
         String name = productForm.getName();
         Product product = productRepository.findByName(name);
         accountService.addProductInCart(account, product);
-        return ResponseEntity.ok().build() ;
+        return "redirect:/mypage/cart";
     }
     @PostMapping("/cart/remove")
-    @ResponseBody
-    public ResponseEntity removeProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model){
+    public String removeProductInCart(@CurrentUser Account account, @RequestBody ProductForm productForm, Model model){
         String name = productForm.getName();
         Product product = productRepository.findByName(name);
         accountService.removeProductInCart(account, product);
-        return ResponseEntity.ok().build() ;
+        return "redirect:/mypage/cart";
     }
     @PostMapping("/liked")
     @ResponseBody

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -153,5 +154,10 @@ public class AccountService implements UserDetailsService {
     public void removeLikedProduct(Account account, Product product) {
         Optional<Account> byId = accountRepository.findById(account.getId());
         byId.ifPresent(a->a.getLikedList().remove(product));
+    }
+
+    public Set<Product> getCart(Account account) {
+        Account byNickname = accountRepository.findByNickname(account.getNickname());
+        return byNickname.getCart();
     }
 }

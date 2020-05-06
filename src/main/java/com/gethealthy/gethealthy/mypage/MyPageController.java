@@ -9,6 +9,7 @@ import com.gethealthy.gethealthy.mypage.form.PasswordForm;
 import com.gethealthy.gethealthy.mypage.form.Profile;
 import com.gethealthy.gethealthy.mypage.validator.NicknameValidator;
 import com.gethealthy.gethealthy.mypage.validator.PasswordFormValidator;
+import com.gethealthy.gethealthy.products.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 public class MyPageController {
@@ -140,8 +142,10 @@ public class MyPageController {
     // 장바구니
     @GetMapping(MYPAGE_CART_URL)
     public String cartList(@CurrentUser Account account, Model model){
+
+        Set<Product> cart = accountService.getCart(account);
         model.addAttribute(account);
-        model.addAttribute("cartList",account.getCart());
+        model.addAttribute("cartList",cart);
         return MYPAGE_CART_VIEW_NAME;
     }
 

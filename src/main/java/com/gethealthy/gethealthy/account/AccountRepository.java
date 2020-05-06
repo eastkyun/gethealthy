@@ -14,9 +14,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     boolean existsByNickname(String nickname);
 
-    @EntityGraph(value = "Account.withAll",type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(value = "Account.withAll",type = EntityGraph.EntityGraphType.FETCH)
     Account findByEmail(String s);
-    @EntityGraph(value = "Account.withAll",type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(value = "Account.withAll",type = EntityGraph.EntityGraphType.FETCH)
     Account findByNickname(String nickname);
 
     boolean existsByLikedListAndId(Product product, Long id);
