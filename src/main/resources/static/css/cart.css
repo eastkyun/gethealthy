@@ -17,13 +17,13 @@ th.size_bg{
 #number_plus_minus button{
     width: 20px;
 }
-#btn_plus{
+#btn_minus{
     border-left-style: none;
     margin-right: -5px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-#btn_minus{
+#btn_plus{
     border-left-style: none;
     margin-left: -5.3px;
     border-top-right-radius: 5px;
