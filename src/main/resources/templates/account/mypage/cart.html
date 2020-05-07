@@ -22,34 +22,35 @@
             <p>장바구니</p>
 
             <div style="margin-bottom:3px;">
-                <button class="btn btn-secondary btn-sm" th:onclick="check([[*{cartList}]])">전체선택</button>
-                <button class="btn btn-secondary btn-sm">선택삭제</button>
+                <button class="btn btn-secondary btn-sm" onclick="checkAll()">전체선택</button>
+                <button class="btn btn-secondary btn-sm" th:onclick="removeProductInCart()">선택삭제</button>
             </div>
-
 
                 <table class="table table-bordered table-hover text-center">
                     <tr>
                         <th class="size_sm">선택</th>
                         <th class="size_bg">주문상품</th>
                         <th class="size_md">판매가</th>
-                        <th class="size_sm">수량</th>
+                        <th class="size_md">수량</th>
                         <th class="size_md">합계</th>
                     </tr>
 
 <!--                    <tr th:each="product: ${cartList}" th:object="${cartObject}" action="#" id="cartForm" method="post">-->
-                    <tr th:each="product, index: ${cartList}">
-                        <td><input type="checkbox"></td>
-                        <td th:text="${product.name}"></td>
-                        <td th:text="${product.price}+'원'"></td>
+                    <th:block th:each="product, index: ${cartList}">
+                    <tr th:id="${'productInfo_'+index.index}">
+                        <td><input class="cb_select" type="checkbox"></td>
+                        <td class="productName" th:text="${product.name}"></td>
+                        <td class="productPrice" th:text="${product.price}+'원'"></td>
                         <td>
-                            <div id="number_plus_minus">
-                            <button id="btn_minus" onclick="updateInput(this.id)">-</button>
-                            <input id="amount" type="text" value=1 class="text-center">
-                            <button id="btn_plus" onclick="updateInput(this.id)">+</button>
+                            <div class="number_plus_minus">
+                            <button class="btn_minus" th:id="${'btn_minus_' + index.index}" th:onclick="updateInput('minus', [[${index.index}]])">-</button>
+                            <input class="productAmount text-center" th:id="${'amount_' + index.index}" type="text" value=1>
+                            <button class="btn_plus" th:id="${'btn_plus_' + index.index}" th:onclick="updateInput('plus', [[${index.index}]])">+</button>
                             </div>
                         </td>
                         <td th:text="${product.price} * 1 +'원'">판매가 * 수량</td>
                     </tr>
+                    </th:block>
 
                     <tr>
                         <td colspan="5" class="text-right"> 상품 구매 금액 ${} + 배송비 ${} = 전체 합계 ${} </td>
@@ -74,36 +75,54 @@
 
 <script th:replace="fragments.html :: form-validation"></script>
 
-<!--<script>-->
-<!--    var checkFlag = 'false'; // false면 전체선택, true이면 전체해제-->
+<script>
+    function checkAll() {
+        cb = document.querySelectorAll(".cb_select");
+        cb.forEach(function(c){
+                c.checked = true;
+        });
+    }
+</script>
+<div sec:authorize="isAuthenticated()">
+    <script th:replace="fragments.html :: ajax-csrf-header"></script>
+</div>
+<script>
+    function removeProductInCart(){
+        // var proList = new Array();
+        cb = document.querySelectorAll(".cb_select");
+        for(i=0;i<cb.length;i++){
+            if(cb[i].checked){
+                // proList.push(document.getElementById('productInfo_'+i));
+                productName = document.getElementById('productInfo_'+i).querySelector(".productName").innerHTML;
 
-<!--    function check(field) {-->
-<!--        if(checkFlag == 'false') {-->
-<!--            for(i = 0; i < 2; i++) {-->
-<!--                field[i].checked = true; // 모든 체크박스를 체크한다.-->
-<!--            }-->
-<!--            checkFlag = "true";-->
-<!--            return "전체 해제"; // 버튼객체의 value속성으로 반환(this.value.list로 넘겨져왔기 때문에)-->
-<!--        } else {-->
-<!--            for(i = 0; i < 2; i++) {-->
-<!--                field[i].checked = false; // 모든 체크박스를 해제한다.-->
-<!--            }-->
-<!--            checkFlag = "false";-->
-<!--            return "전체 선택"; // 버튼객체의 vaule속성으로 반환-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
+                $.ajax({
+                    dataType: "json",
+                    autocomplete: {
+                        enabled: true,
+                        rightKey: true,
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    method: "POST",
+                    url: "/cart/remove",
+                    data: JSON.stringify({"name" : productName}),
+                }).done(function (data, status) {
+                });
+
+            }
+        }
+    }
+</script>
 
 <script>
-    function updateInput(id) {
-        if(id == "btn_plus"){
-            num = Number(document.getElementById("amount").value)+1;
-            document.getElementById("amount").value = num;
-        }else if(id == "btn_minus"){
-            num = Number(document.getElementById("amount").value)-1;
-            document.getElementById("amount").value = num;
+    function updateInput(func, desc) {
+        if(func == "plus"){
+            num = Number(document.getElementById('amount_'+String(desc)).value)+1;
+            document.getElementById('amount_'+String(desc)).value = num;
+        }else if(func == "minus"){
+            num = Number(document.getElementById('amount_'+String(desc)).value)-1;
+            document.getElementById('amount_'+String(desc)).value = num;
             if(num < 1){
-                document.getElementById("amount").value = 1;
+                document.getElementById('amount_'+String(desc)).value = 1;
             }
         }
     }
