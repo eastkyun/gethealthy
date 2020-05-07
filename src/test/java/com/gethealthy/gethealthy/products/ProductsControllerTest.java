@@ -72,6 +72,7 @@ class ProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productForm))
                 .with(csrf()))
+
                 .andExpect(status().isOk());
 
         Product product = productRepository.findByName("홍삼즙");
@@ -92,7 +93,7 @@ class ProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productForm))
                 .with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection());
 
 
         Product product = productRepository.findByName("홍삼즙");
@@ -104,7 +105,8 @@ class ProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productForm))
                 .with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(flash().attributeExists("message"))
+                .andExpect(status().is3xxRedirection());
 
 
         Product product1 = productRepository.findByName("홍삼즙");
