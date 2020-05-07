@@ -21,7 +21,7 @@
         <div class="col-8">
             <p>장바구니</p>
 
-            <div style="margin-bottom:3px;">
+            <div class="mb-1">
                 <button class="btn btn-secondary btn-sm" onclick="checkAll()">전체선택</button>
                 <button class="btn btn-secondary btn-sm" th:onclick="removeProductInCart()">선택삭제</button>
             </div>
@@ -92,8 +92,9 @@
         cb = document.querySelectorAll(".cb_select");
         for(i=0;i<cb.length;i++){
             if(cb[i].checked){
-                // proList.push(document.getElementById('productInfo_'+i));
-                productName = document.getElementById('productInfo_'+i).querySelector(".productName").innerHTML;
+
+                product = document.getElementById('productInfo_'+i);
+                productName = product.querySelector(".productName").innerHTML;
 
                 $.ajax({
                     dataType: "json",
@@ -107,6 +108,9 @@
                     data: JSON.stringify({"name" : productName}),
                 }).done(function (data, status) {
                 });
+
+                product.remove();
+
 
             }
         }
