@@ -1,0 +1,41 @@
+th.size_sm{
+    width: 7%;
+}
+th.size_md{
+    width: 20%;
+}
+
+th.size_bg{
+    width: 40%;
+}
+
+.number_plus_minus input{
+    padding : 0px;
+    width: 20px;
+    height: 36px;
+}
+.number_plus_minus button{
+    width: 20px;
+}
+.btn_minus{
+    border-left-style: none;
+    margin-right: -5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.btn_plus{
+    border-left-style: none;
+    margin-left: -5.3px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.number_plus_minus button{
+    border: 1px solid #bfbfbf;
+    background-color: rgba(0,0,0,0);
+    color: #bfbfbf;
+    padding: 5px;
+}
+.number_plus_minus button:hover{
+    color:white;
+    background-color: #bfbfbf;
+}
