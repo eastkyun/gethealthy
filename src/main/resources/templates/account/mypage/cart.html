@@ -48,12 +48,12 @@
                             <button class="btn_plus" th:id="${'btn_plus_' + index.index}" th:onclick="updateInput('plus', [[${index.index}]])">+</button>
                             </div>
                         </td>
-                        <td th:text="${product.price} * 1 +'원'">판매가 * 수량</td>
+                        <td class="productsPrice" th:text="${product.price} * 1 +'원'">판매가 * 수량</td>
                     </tr>
                     </th:block>
 
                     <tr>
-                        <td colspan="5" class="text-right"> 상품 구매 금액 ${} + 배송비 ${} = 전체 합계 ${} </td>
+                        <td id="Total" colspan="5" class="text-right"> 상품 구매 금액 ${} + 배송비 ${} = 전체 합계 ${} </td>
                     </tr>
                 </table>
 
@@ -83,17 +83,18 @@
         });
     }
 </script>
+
 <div sec:authorize="isAuthenticated()">
     <script th:replace="fragments.html :: ajax-csrf-header"></script>
 </div>
 <script>
     function removeProductInCart(){
-        // var proList = new Array();
+        var remainPrice = 0;
         cb = document.querySelectorAll(".cb_select");
-        for(i=0;i<cb.length;i++){
-            if(cb[i].checked){
 
-                product = document.getElementById('productInfo_'+i);
+        for(i=0; i<cb.length; i++){
+            product = document.getElementById('productInfo_'+i);
+            if(cb[i].checked){
                 productName = product.querySelector(".productName").innerHTML;
 
                 $.ajax({
@@ -111,9 +112,11 @@
 
                 product.remove();
 
-
+            }else{
+                remainPrice += Number(product.querySelector(".productsPrice").innerHTML.slice(0,-1));
             }
         }
+        document.getElementById('Total').innerText = '전체 합계 : ' + remainPrice + '원';
     }
 </script>
 
@@ -132,5 +135,16 @@
     }
 </script>
 
+<script>
+    function productPriceAll(){
+        var total = 0;
+        productPrice = document.querySelectorAll(".productsPrice");
+        productPrice.forEach(function(price){
+            total += Number(price.innerText.slice(0, -1));
+        });
+        document.getElementById('Total').innerText = '전체 합계 : ' + total + '원';
+    }
+    productPriceAll();
+</script>
 </body>
 </html>
