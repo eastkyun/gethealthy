@@ -68,44 +68,35 @@
         </div>
     </div>
 
-    <div class="row mt-3 justify-content-center">
+    <div class="col-11 mt-3 ml-auto mr-auto nav-justified">
         <!--메뉴-->
-        <div class="col-3">
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-intro-tab" data-toggle="pill" href="#v-pills-profile"
-                   role="tab" aria-controls="v-pills-profile" aria-selected="true">
-                    상품 소개
-                </a>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-product-tab" data-toggle="tab" href="#nav-product" role="tab" aria-controls="nav-product" aria-selected="true">상품소개</a>
+                <a class="nav-item nav-link" id="nav-review-tab" data-toggle="tab" href="#nav-review" role="tab" aria-controls="nav-review" aria-selected="false">후기</a>
+            </div>
+        </nav>
 
-                <a class="nav-link" id="v-pills-study-tab" data-toggle="pill" href="#v-pills-study"
-                   role="tab" aria-controls="v-pills-study" aria-selected="false">
-                    후기
-
-                </a>
+        <!--본문-->
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab">
+                상품 소개
             </div>
 
-        </div>
-        <!--본문-->
-        <div class="col-6">
-            <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                    상품 소개
-                </div>
-                <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-intro-tab"
-                     th:each="review : ${reviews}">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${review.getAuthor().nickname}">Special title treatment </h5>
-                            <span th:text="${review.created}"></span> 좋아요: <span th:text="${review.liked}"></span>
-                            <p class="card-text" th:text="${review.contents}">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
+            <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                <h5>리뷰</h5>
+                <div class="card" th:each="review : ${reviews}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${review.getAuthor().nickname}">Special title treatment </h5>
+                        <span th:text="${review.created}"></span> 좋아요: <span th:text="${review.liked}"></span>
+                        <p class="card-text" th:text="${review.contents}">With supporting text below as a natural lead-in to additional content.</p>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
+</div>
+
     <!-- 푸터-->
     <div th:replace="fragments.html :: footer"></div>
 </div>
