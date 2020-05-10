@@ -32,6 +32,9 @@ public class Post {
     * */
     private Long category;
 
+    @Enumerated(EnumType.STRING)
+    private PostType postType;
+
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     private String contents;
@@ -50,4 +53,5 @@ public class Post {
 
     @ManyToOne
     private Product product;
+
 }

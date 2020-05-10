@@ -7,6 +7,7 @@ import com.gethealthy.gethealthy.account.AccountService;
 import com.gethealthy.gethealthy.account.CurrentUser;
 import com.gethealthy.gethealthy.community.Post;
 import com.gethealthy.gethealthy.community.PostRepository;
+import com.gethealthy.gethealthy.community.PostType;
 import com.gethealthy.gethealthy.products.form.ProductForm;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,8 @@ public class ProductsController {
                 model.addAttribute("isLiked","false");
             }
         }
-        Page<Post> reviews = postRepository.findAllByCategoryAndProduct(3L, product, pageable);
+
+        Page<Post> reviews = postRepository.findAllByPostTypeAndProduct(PostType.REVIEW, product, pageable);
         model.addAttribute("reviews", reviews);
         model.addAttribute(modelMapper.map(product, ProductForm.class));
         return "products/details";
