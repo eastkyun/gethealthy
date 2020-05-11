@@ -27,8 +27,12 @@ public class Product {
     @OneToOne
     private Account seller;
 
+    @Column(nullable = false)
+    private boolean displayed=true;
+
     @Lob
     private String description;
+
     private String numberOf;
 
     @Lob

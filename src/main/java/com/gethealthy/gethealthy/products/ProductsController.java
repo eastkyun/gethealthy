@@ -18,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -100,4 +101,30 @@ public class ProductsController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/product/form")
+    public String productForm(@CurrentUser Account account, Model model) {
+        model.addAttribute(account);
+        model.addAttribute(ProductForm.class);
+        return "product/form";
+    }
+    @PostMapping("/product/create")
+    public String createProduct(@CurrentUser Account account, Model model,
+                                @RequestBody ProductForm productForm,Errors error) {
+        if (!account.isAdminAccount()){
+            return "product/index";
+        }
+        Product product = modelMapper.map(productForm, Product.class);
+        productService.addProduct(product);
+        return "product/index";
+    }
+    @PostMapping("/product/delete")
+    public String removeProduct(@CurrentUser Account account, Model model,
+                                @RequestBody ProductForm productForm,Errors error) {
+        if (!account.isAdminAccount()){
+            return "product/index";
+        }
+        Product byName = productRepository.findByName(productForm.getName());
+        productService.removeProduct(byName);
+        return "product/index";
+    }
 }

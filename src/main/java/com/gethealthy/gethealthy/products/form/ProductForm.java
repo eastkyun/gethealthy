@@ -17,6 +17,8 @@ public class ProductForm {
 
     private Long liked;
 
+    private boolean displayed;
+
     private String numberOf;
 
     private Long amount;

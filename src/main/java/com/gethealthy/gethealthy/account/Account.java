@@ -49,6 +49,8 @@ public class Account {
 
     private String liveAround;
 
+    private boolean adminAccount=false;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Product> cart = new HashSet<>();
 

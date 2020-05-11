@@ -40,4 +40,13 @@ public class ProductService {
         product.setLiked(product.getLiked()-1);
         productRepository.save(product);
     }
+
+    public void addProduct(Product product) {
+        productRepository.save(product);
+    }
+
+    public void removeProduct(Product byName) {
+        byName.setDisplayed(false);
+        productRepository.save(byName);
+    }
 }
