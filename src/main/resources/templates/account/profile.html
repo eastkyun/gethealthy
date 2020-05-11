@@ -100,11 +100,13 @@
 
                 </div>
                 <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-intro-tab">
-                    <!--                        <p th:text="${#strings.listJoin(likedList, ', ')}"></p>-->
-                    <div th:each="likeItem : ${likedList}" th:object="${likeItem}">
-                        <p class="mb-1 mt-3" th:text="*{name}"></p>
-                        가격 : <span th:text="*{price}"></span>
-                        좋아요 : <span th:text="*{liked}"></span>
+                    <div class="row">
+                        <div id="likeProduct" class="col-3 ml-3 mb-3" th:each="likeItem : ${likedList}" th:object="${likeItem}">
+                            <img alt="Card image cap" class="card-img-top" src="https://picsum.photos/seed/picsum/286/180">
+                            <p class="mb-1 mt-3" th:text="*{name}"></p>
+                            가격 : <span th:text="*{price}"></span>
+                            좋아요 : <span th:text="*{liked}"></span>
+                        </div>
                     </div>
                 </div>
             </div>

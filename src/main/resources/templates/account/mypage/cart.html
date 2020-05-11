@@ -40,20 +40,20 @@
                     <tr th:id="${'productInfo_'+index.index}">
                         <td><input class="cb_select" type="checkbox"></td>
                         <td class="productName" th:text="${product.name}"></td>
-                        <td class="productPrice" th:text="${product.price}+'원'"></td>
+                        <td class="productPrice price" th:id="${'price_' + index.index}" th:text="${product.price}"></td>
                         <td>
                             <div class="number_plus_minus">
-                            <button class="btn_minus" th:id="${'btn_minus_' + index.index}" th:onclick="updateInput('minus', [[${index.index}]])">-</button>
-                            <input class="productAmount text-center" th:id="${'amount_' + index.index}" type="text" value=1>
-                            <button class="btn_plus" th:id="${'btn_plus_' + index.index}" th:onclick="updateInput('plus', [[${index.index}]])">+</button>
+                            <button class="btn_minus" th:id="${'btn_minus_' + index.index}" th:onclick="updateInput('minus', [[${index.index}]]);calSum([[${index.index}]]);productPriceAll();">-</button>
+                            <input class="productAmount text-center" th:id="${'amount_' + index.index}" type="text" value=1 th:onchange="calSum([[${index.index}]]);productPriceAll();">
+                            <button class="btn_plus" th:id="${'btn_plus_' + index.index}" th:onclick="updateInput('plus', [[${index.index}]]);calSum([[${index.index}]]);productPriceAll();">+</button>
                             </div>
                         </td>
-                        <td class="productsPrice" th:text="${product.price} * 1 +'원'">판매가 * 수량</td>
+                        <td class="productsPrice price" th:id="${'sumProduct_'+index.index}" th:text="${product.price} * 1">판매가 * 수량</td>
                     </tr>
                     </th:block>
 
                     <tr>
-                        <td id="Total" colspan="5" class="text-right"> 상품 구매 금액 ${} + 배송비 ${} = 전체 합계 ${} </td>
+                        <td id="Total" colspan="5" class="text-right price">10000</td>
                     </tr>
                 </table>
 
@@ -140,11 +140,22 @@
         var total = 0;
         productPrice = document.querySelectorAll(".productsPrice");
         productPrice.forEach(function(price){
-            total += Number(price.innerText.slice(0, -1));
+            total += numeral(price.innerText.slice(0,-1))._value;
         });
-        document.getElementById('Total').innerText = '전체 합계 : ' + total + '원';
+        document.getElementById('Total').innerText = '전체 합계 : ' + numeral(total).format(0,0) + '원';
     }
     productPriceAll();
 </script>
+
+<script>
+    function calSum(index) {
+        console.log("calsum");
+        price = numeral(document.getElementById('price_'+index).innerHTML.slice(0,-1))._value;
+        amount = document.getElementById('amount_'+index).value;
+        total = price * amount;
+        document.getElementById('sumProduct_'+index).innerText = numeral(total).format(0,0) + '원';
+    }
+</script>
+<script>numberWithCommas();</script>
 </body>
 </html>
