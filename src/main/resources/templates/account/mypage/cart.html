@@ -77,9 +77,10 @@
 
 <script>
     function checkAll() {
+        var flag = true;
         cb = document.querySelectorAll(".cb_select");
         cb.forEach(function(c){
-                c.checked = true;
+            c.checked = true;
         });
     }
 </script>
@@ -96,7 +97,7 @@
             product = document.getElementById(info.id);
             flag = info.childNodes[1].childNodes[0].checked;
             if(flag){
-                productName = productInfo[0].childNodes[2].nextSibling.innerHTML;
+                productName = info.childNodes[2].nextSibling.innerHTML;
 
                 $.ajax({
                     dataType: "json",
@@ -114,11 +115,11 @@
                 product.remove();
 
             }else{
-                remainPrice += numeral(productInfo[0].childNodes[5].innerHTML)._value;
+                remainPrice += numeral(info.childNodes[5].innerHTML)._value;
             }
         });
 
-        document.getElementById('Total').innerText = '전체 합계 : ' + remainPrice+'원';
+        document.getElementById('Total').innerText = '전체 합계 : ' + remainPrice;
     }
 </script>
 
