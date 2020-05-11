@@ -38,7 +38,7 @@
                         review : 0
                     </p>
                 <hr>
-                <p class="card-text text-center" th:text="${product.price}+'원'">100,000</p>
+                <p class="card-text text-center price" th:text="${product.price}">100,000</p>
                 <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
             </div>
         </div>
@@ -46,6 +46,6 @@
     <!-- 푸터-->
     <div th:replace="fragments.html :: footer"></div>
 </div>
-
+<script>numberWithCommas();</script>
 </body>
 </html>
