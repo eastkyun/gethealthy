@@ -37,7 +37,7 @@
 
 <!--                    <tr th:each="product: ${cartList}" th:object="${cartObject}" action="#" id="cartForm" method="post">-->
                     <th:block th:each="product, index: ${cartList}">
-                    <tr th:id="${'productInfo_'+index.index}">
+                    <tr th:id="${'productInfo_'+index.index}" class="productInfo">
                         <td><input class="cb_select" type="checkbox"></td>
                         <td class="productName" th:text="${product.name}"></td>
                         <td class="productPrice price" th:id="${'price_' + index.index}" th:text="${product.price}"></td>
@@ -90,12 +90,13 @@
 <script>
     function removeProductInCart(){
         var remainPrice = 0;
-        cb = document.querySelectorAll(".cb_select");
+        productInfo = document.querySelectorAll(".productInfo");
 
-        for(i=0; i<cb.length; i++){
-            product = document.getElementById('productInfo_'+i);
-            if(cb[i].checked){
-                productName = product.querySelector(".productName").innerHTML;
+        productInfo.forEach(function (info) {
+            product = document.getElementById(info.id);
+            flag = info.childNodes[1].childNodes[0].checked;
+            if(flag){
+                productName = productInfo[0].childNodes[2].nextSibling.innerHTML;
 
                 $.ajax({
                     dataType: "json",
@@ -113,10 +114,11 @@
                 product.remove();
 
             }else{
-                remainPrice += Number(product.querySelector(".productsPrice").innerHTML.slice(0,-1));
+                remainPrice += numeral(productInfo[0].childNodes[5].innerHTML)._value;
             }
-        }
-        document.getElementById('Total').innerText = '전체 합계 : ' + remainPrice + '원';
+        });
+
+        document.getElementById('Total').innerText = '전체 합계 : ' + remainPrice+'원';
     }
 </script>
 
@@ -140,20 +142,19 @@
         var total = 0;
         productPrice = document.querySelectorAll(".productsPrice");
         productPrice.forEach(function(price){
-            total += numeral(price.innerText.slice(0,-1))._value;
+            total += numeral(price.innerText)._value;
         });
-        document.getElementById('Total').innerText = '전체 합계 : ' + numeral(total).format(0,0) + '원';
+        document.getElementById('Total').innerText = '전체 합계 : ' + numeral(total).format(0,0);
     }
     productPriceAll();
 </script>
 
 <script>
     function calSum(index) {
-        console.log("calsum");
-        price = numeral(document.getElementById('price_'+index).innerHTML.slice(0,-1))._value;
+        price = numeral(document.getElementById('price_'+index).innerHTML)._value;
         amount = document.getElementById('amount_'+index).value;
         total = price * amount;
-        document.getElementById('sumProduct_'+index).innerText = numeral(total).format(0,0) + '원';
+        document.getElementById('sumProduct_'+index).innerText = numeral(total).format(0,0);
     }
 </script>
 <script>numberWithCommas();</script>
