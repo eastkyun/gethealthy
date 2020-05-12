@@ -79,8 +79,18 @@
     function checkAll() {
         var flag = true;
         cb = document.querySelectorAll(".cb_select");
+        for(i=0; i < cb.length; i++){
+            if(!cb[i].checked){
+                flag = false;
+                break;
+            }
+        }
         cb.forEach(function(c){
-            c.checked = true;
+            if(flag){
+                c.checked = false;
+            }else{
+                c.checked = true;
+            }
         });
     }
 </script>
