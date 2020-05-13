@@ -1,5 +1,6 @@
 package com.gethealthy.gethealthy.products;
 
+import com.gethealthy.gethealthy.account.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -25,7 +26,7 @@ public class ProductService {
             Resource resource = new ClassPathResource("product_kr.csv");
             List<Product> zoneList = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8).stream().map(line -> {
                 String[] split = line.split(",");
-                return Product.builder().name(split[0]).price(split[1]).numberOf(split[2]).liked(Long.parseLong(split[3])).build();
+                return Product.builder().name(split[0]).price(split[1]).numberOf(Long.parseLong(split[2])).liked(Long.parseLong(split[3])).build();
             }).collect(Collectors.toList());
             productRepository.saveAll(zoneList);
         }
@@ -48,5 +49,12 @@ public class ProductService {
     public void removeProduct(Product byName) {
         byName.setDisplayed(false);
         productRepository.save(byName);
+    }
+
+    public void createProduct(Account account, Product product) {
+        product.setSeller(account);
+        product.setDisplayed(true);
+        product.setLiked(0L);
+        productRepository.save(product);
     }
 }

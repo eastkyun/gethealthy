@@ -10,16 +10,15 @@ import com.gethealthy.gethealthy.mypage.form.Profile;
 import com.gethealthy.gethealthy.mypage.validator.NicknameValidator;
 import com.gethealthy.gethealthy.mypage.validator.PasswordFormValidator;
 import com.gethealthy.gethealthy.products.Product;
+import com.gethealthy.gethealthy.products.ProductService;
+import com.gethealthy.gethealthy.products.form.ProductForm;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -39,6 +38,8 @@ public class MyPageController {
     static final String MYPAGE_CART_URL ="/mypage/cart";
     static final String MYPAGE_ORDER_VIEW_NAME="account/mypage/order";
     static final String MYPAGE_ORDER_URL ="/mypage/order";
+    static final String MYPAGE_PRODUCT_VIEW_NAME="/products/form";
+    static final String MYPAGE_PRODUCT_URL ="/mypage/product";
 
 
     @Autowired
@@ -52,6 +53,9 @@ public class MyPageController {
 
     @Autowired
     private PasswordFormValidator passwordFormValidator;
+
+    @Autowired
+    private ProductService productService;
 
     @InitBinder("passwordForm")
     public void passwordFormInitBinder(WebDataBinder webDataBinder){
@@ -110,7 +114,7 @@ public class MyPageController {
 
     @PostMapping(MYPAGE_NOTIFICATIONS_URL)
     public String updateNotifications(@CurrentUser Account account, @Valid Notifications notifications, Errors errors,
-                                 RedirectAttributes attributes, Model model) {
+                                      RedirectAttributes attributes, Model model) {
         if(errors.hasErrors()){
             model.addAttribute(account);
             return MYPAGE_NOTIFICATIONS_VIEW_NAME;
@@ -153,5 +157,26 @@ public class MyPageController {
     public String orderList(@CurrentUser Account account, Model model){
         model.addAttribute(account);
         return MYPAGE_ORDER_VIEW_NAME;
+    }
+
+    @GetMapping(MYPAGE_PRODUCT_URL)
+    public String productForm(@CurrentUser Account account, Model model){
+        model.addAttribute(account);
+        model.addAttribute("product",new ProductForm());
+        return MYPAGE_PRODUCT_VIEW_NAME;
+    }
+    @PostMapping(MYPAGE_PRODUCT_URL+"/add")
+    public String createProduct(@CurrentUser Account account,@ModelAttribute("product") ProductForm productForm,
+                                Errors errors, Model model){
+        Product product = modelMapper.map(productForm, Product.class);
+        if(errors.hasErrors()){
+            model.addAttribute(account);
+            model.addAttribute("product",new ProductForm());
+            return MYPAGE_PRODUCT_VIEW_NAME;
+        }
+        productService.createProduct(account,product);
+        model.addAttribute(account);
+
+        return MYPAGE_PRODUCT_VIEW_NAME;
     }
 }

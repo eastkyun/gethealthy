@@ -2,55 +2,66 @@
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head">
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500&display=swap" rel="stylesheet">
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/img_hover.css">
-    <link rel="stylesheet" href="/css/cart.css">
-    <link rel="stylesheet" href="/css/like_btn_tooltip.css">
+    <link href="/node_modules/summernote/dist/summernote-bs4.min.css" rel="stylesheet">
+    <link href="/css/img_hover.css" rel="stylesheet">
+    <link href="/css/cart.css" rel="stylesheet">
+    <link href="/css/like_btn_tooltip.css" rel="stylesheet">
+
     <meta charset="UTF-8">
     <title>건강한 홍삼군</title>
     <style>
         .container {
             max-width: 100%;
         }
+
         .main-a-tag-style {
             text-decoration: none;
             font-size: 1.3em;
-            color:#111111;
+            color: #111111;
         }
+
         .main-a-tag-style:hover {
             text-decoration: none;
             font-size: 1.3em;
-            color:#111111;
+            color: #111111;
         }
+
         .main-a-tag-style:focus {
             text-decoration: none;
             font-size: 1.3em;
-            color:#111111;
+            color: #111111;
         }
-        .nav-menu-custom-a-tag{
+
+        .nav-menu-custom-a-tag {
             color: #111131;
             font-size: 1.2em;
         }
-        .nav-menu-custom-a-tag:hover{
+
+        .nav-menu-custom-a-tag:hover {
             color: #111131;
             font-size: 1.2em;
         }
-        .nav-menu-custom-a-tag:focus{
+
+        .nav-menu-custom-a-tag:focus {
             color: #111131;
             font-size: 1.2em;
         }
-        #logout_form:hover{
-            cursor:pointer;
+
+        #logout_form:hover {
+            cursor: pointer;
         }
     </style>
 
-    <script src="/js/comma.js"></script>
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
     <script src="/node_modules/numeral/min/numeral.min.js"></script>
+    <script src="/js/comma.js"></script>
+
 
 </head>
 
@@ -87,50 +98,51 @@
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" hr  ef="#" th:href="@{/mypage/cart}">
-<!--                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>-->
+                    <a class="nav-link" ef="#" hr th:href="@{/mypage/cart}">
+                        <!--                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>-->
                         CART
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" hr  ef="#" th:href="@{'/mypage/order'}">
+                    <a class="nav-link" ef="#" hr th:href="@{'/mypage/order'}">
                         ORDER
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" hr  ef="#" th:href="@{'/mypage/' + ${#authentication.name}}">
+                    <a class="nav-link" ef="#" hr th:href="@{'/mypage/' + ${#authentication.name}}">
                         MYPAGE
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form action="#" class="form-inline my-2 my-lg-0" id="logout_form" method="post" th:action="@{/logout}">
+                    <form action="#" class="form-inline my-2 my-lg-0" id="logout_form" method="post"
+                          th:action="@{/logout}">
                         <a class="nav-link" onclick="document.getElementById('logout_form').submit();">LOGOUT</a>
                     </form>
                 </li>
 
-<!--                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">-->
-<!--                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"-->
-<!--                       id="userDropdown" role="button">-->
-<!--                        <svg class="rounded border bg-light" data-jdenticon-value="user127" height="24"-->
-<!--                             th:data-jdenticon-value="${#authentication.name}"-->
-<!--                             th:if="${#strings.isEmpty(account?.profileImage)}" width="24"></svg>-->
-<!--                        <img class="rounded border" height="24"-->
-<!--                             th:if="${!#strings.isEmpty(account?.profileImage)}" th:src="${account.profileImage}"-->
-<!--                             width="24">-->
-<!--                    </a>-->
-<!--                    <div aria-labelledby="userDropdown" class="dropdown-menu dropdown-menu-sm-right">-->
-<!--                        <h6 class="dropdown-header">-->
-<!--                            <span sec:authentication="name">Username</span>-->
-<!--                        </h6>-->
-<!--                        <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>-->
-<!--                        <a class="dropdown-item">장바구니</a>-->
-<!--                        <div class="dropdown-divider"></div>-->
-<!--                        <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>-->
-<!--                        <form action="#" class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">-->
-<!--                            <button class="dropdown-item" type="submit">로그아웃</button>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                </li>-->
+                <!--                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">-->
+                <!--                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"-->
+                <!--                       id="userDropdown" role="button">-->
+                <!--                        <svg class="rounded border bg-light" data-jdenticon-value="user127" height="24"-->
+                <!--                             th:data-jdenticon-value="${#authentication.name}"-->
+                <!--                             th:if="${#strings.isEmpty(account?.profileImage)}" width="24"></svg>-->
+                <!--                        <img class="rounded border" height="24"-->
+                <!--                             th:if="${!#strings.isEmpty(account?.profileImage)}" th:src="${account.profileImage}"-->
+                <!--                             width="24">-->
+                <!--                    </a>-->
+                <!--                    <div aria-labelledby="userDropdown" class="dropdown-menu dropdown-menu-sm-right">-->
+                <!--                        <h6 class="dropdown-header">-->
+                <!--                            <span sec:authentication="name">Username</span>-->
+                <!--                        </h6>-->
+                <!--                        <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>-->
+                <!--                        <a class="dropdown-item">장바구니</a>-->
+                <!--                        <div class="dropdown-divider"></div>-->
+                <!--                        <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>-->
+                <!--                        <form action="#" class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">-->
+                <!--                            <button class="dropdown-item" type="submit">로그아웃</button>-->
+                <!--                        </form>-->
+                <!--                    </div>-->
+                <!--                </li>-->
             </ul>
         </div>
     </nav>
@@ -138,7 +150,7 @@
         <div class="mt-5 mb-5 justify-content-center">
             <div class="text-center">
                 <!--        <img alt="가게이름" height="30" src="/images/logo_sm.png" width="30">-->
-                <a class="lead main-a-tag-style"  href="/" th:href="@{/}">
+                <a class="lead main-a-tag-style" href="/" th:href="@{/}">
                     건강한 홍삼군
                 </a>
             </div>
@@ -180,13 +192,15 @@
        th:href="@{/mypage/profile}">프로필</a>
     <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'password'}? active"
        th:href="@{/mypage/password}">패스워드</a>
+    <a class="list-group-item list-group-item-action" href="#" th:classappend="${currentMenu == 'product'}? active"
+       th:href="@{/mypage/product}" th:if="${account.isAdminAccount()}">상품</a>
     <a class="list-group-item list-group-item-action" href="#"
        th:classappend="${currentMenu == 'notifications'}? active" th:href="@{/mypage/notifications}">알림</a>
     <a class="list-group-item list-group-item-action list-group-item-danger"
        href="#" th:classappend="${currentMenu == 'account'}? active" th:href="@{/mypage/account}">계정</a>
 </div>
-<script type="application/javascript" th:inline="javascript" th:fragment="ajax-csrf-header">
-    $(function() {
+<script th:fragment="ajax-csrf-header" th:inline="javascript" type="application/javascript">
+    $(function () {
         var csrfToken = /*[[${_csrf.token}]]*/ null;
         var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
         $(document).ajaxSend(function (e, xhr, options) {
@@ -215,4 +229,19 @@
         }, false)
     }())
 </script>
+<div th:fragment="editor-script">
+    <script src="/node_modules/summernote/dist/summernote-bs4.min.js"></script>
+    <script type="application/javascript">
+        $(function () {
+            $('.editor').summernote({
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Noto Sans KR', 'Merriweather'],
+                placeholder: '상품에 대한 자세한 설명을 작성해 주세요.',
+                tabsize: 2,
+                height: 300,
+                lang: 'ko-KR'
+            });
+        });
+    </script>
+</div>
+
 </html>

@@ -24,16 +24,16 @@ public class Product {
 
     private Long liked;
 
-    @OneToOne
+    @ManyToOne
     private Account seller;
 
     @Column(nullable = false)
-    private boolean displayed=true;
+    private boolean displayed;
 
     @Lob
     private String description;
 
-    private String numberOf;
+    private Long numberOf;
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
