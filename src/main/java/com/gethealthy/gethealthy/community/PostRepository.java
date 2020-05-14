@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PostRepository extends JpaRepository<Post,Long> {
 //     Page<Post> findAllByCategoryAndProduct(Long category, Product product , Pageable pageable);
      Page<Post> findAllByPostTypeAndProduct(PostType postType, Product product, Pageable pageable);
-     Page<Post> findAllByCategory(Long category, Pageable pageable);
+     Page<Post> findAllByPostType(PostType postType, Pageable pageable);
 
      Post findByTitle(String title);
 }

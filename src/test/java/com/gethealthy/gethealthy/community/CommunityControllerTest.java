@@ -135,7 +135,7 @@ class CommunityControllerTest {
         Post review = Post.builder().title("제목" ).contents("내용" )
                 .created(LocalDateTime.now())
                 .liked((long) 0)
-                .category((long) 3)
+//                .category((long) 3)
                 .product(item)
                 .created(LocalDateTime.now())
                 .build();

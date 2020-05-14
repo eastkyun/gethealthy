@@ -13,35 +13,45 @@
 <!--메인 화면-->
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-2">
+        <div class="col-5">
             <p class="lead mb-0">건강한 홍삼군 상품</p>
             <small>전체 상품 <strong th:text="${#lists.size(productList)}"></strong> 개</small>
         </div>
-        <div class="col-8">
+        <div class="col-5">
             <!--            <p>건강한 홍삼군 상품</p>-->
         </div>
     </div>
-    <div class="row justify-content-center mt-3">
-        <div class="card col-sm-2 mt-2 ml-1 mr-1" style="padding: 0px;" th:each="product: ${productList}">
-            <a class="card-link" th:href="@{/products/details/}+${product.name}">
-                <img alt="Card image cap" class="card-img-top img_click" src="https://picsum.photos/seed/picsum/286/180">
-            </a>
-
-            <div class="card-body">
-                    <p class="card-title text-center" th:inline="text">
-                        [[${product.name}]]
-                        <span class="badge badge-danger" th:if="${product.numberOf}<5">품절임박</span>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row justify-content-start mt-3">
+                <div class="card mt-2 ml-1 mr-1" style="padding: 0;width:24%; cursor: pointer;" th:each="product: ${productList}"
+                     th:onclick="location.href='/products/details/'+[[${product.name}]]">
+                    <p class="card-link">
+                        <img alt="Card image cap" class="card-img-top img_click" src="https://picsum.photos/seed/picsum/286/180">
                     </p>
 
-                    <p class="card-title text-center" th:text= "'review : '+${product.numberOf}">
-                        review : 0
-                    </p>
-                <hr>
-                <p class="card-text text-center price" th:text="${product.price}">100,000</p>
-                <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+                    <div class="card-body">
+                        <p class="card-title text-center" th:inline="text">
+                            [[${product.name}]]
+                            <span class="badge badge-danger" th:if="${product.numberOf}<5">품절임박</span>
+                        </p>
+
+                        <p class="card-title text-center" th:text= "'review : '+${product.numberOf}">
+                            review : 0
+                        </p>
+                        <hr>
+                        <p class="card-text text-center price" th:text="${product.price}">100,000</p>
+                        <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="col-1"></div>
+
     </div>
+
     <!-- 푸터-->
     <div th:replace="fragments.html :: footer"></div>
 </div>

@@ -60,7 +60,7 @@ public class CommunityController {
                          @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
                                  Pageable pageable){
         if(account!=null) model.addAttribute(account);
-        Page<Post> noticePage = postRepository.findAllByCategory(1L, pageable);
+        Page<Post> noticePage = postRepository.findAllByPostType(PostType.NOTICE, pageable);
         model.addAttribute("notices",noticePage);
         return Community_NOTICE_VIEW_NAME;
     }
@@ -70,7 +70,7 @@ public class CommunityController {
                          @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
                                  Pageable pageable){
         if(account!=null) model.addAttribute(account);
-        Page<Post> reviewPage = postRepository.findAllByCategory(3L, pageable);
+        Page<Post> reviewPage = postRepository.findAllByPostType(PostType.REVIEW, pageable);
         model.addAttribute("reviews",reviewPage);
         return Community_REVIEW_VIEW_NAME;
     }
@@ -80,7 +80,7 @@ public class CommunityController {
                       @PageableDefault(size = 5, sort = "created", direction = Sort.Direction.DESC)
                               Pageable pageable){
         if(account!=null) model.addAttribute(account);
-        Page<Post> qnaPage = postRepository.findAllByCategory(2L, pageable);
+        Page<Post> qnaPage = postRepository.findAllByPostType(PostType.QNA, pageable);
         model.addAttribute("qnaPage",qnaPage);
         return Community_QNA_VIEW_NAME;
     }
