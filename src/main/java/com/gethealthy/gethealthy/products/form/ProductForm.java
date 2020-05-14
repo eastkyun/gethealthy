@@ -16,6 +16,7 @@ public class ProductForm {
     @Pattern(regexp = "^[0-9]*$",message = "가격을 입력해주세요.")
     private String price;
 
+    @NotBlank
     private String description;
 
     private String origin;

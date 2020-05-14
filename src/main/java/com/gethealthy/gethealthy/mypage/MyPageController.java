@@ -41,7 +41,7 @@ public class MyPageController {
     static final String MYPAGE_CART_URL ="/mypage/cart";
     static final String MYPAGE_ORDER_VIEW_NAME="account/mypage/order";
     static final String MYPAGE_ORDER_URL ="/mypage/order";
-    static final String MYPAGE_PRODUCT_VIEW_NAME="/products/form";
+    static final String MYPAGE_PRODUCT_VIEW_NAME="account/mypage/product";
     static final String MYPAGE_PRODUCT_URL ="/mypage/product";
 
 
@@ -171,7 +171,7 @@ public class MyPageController {
     @GetMapping(MYPAGE_PRODUCT_URL)
     public String productForm(@CurrentUser Account account, Model model){
         model.addAttribute(account);
-        model.addAttribute(new ProductForm());
+        model.addAttribute("productForm",new ProductForm());
         return MYPAGE_PRODUCT_VIEW_NAME;
     }
     @PostMapping(MYPAGE_PRODUCT_URL+"/add")
