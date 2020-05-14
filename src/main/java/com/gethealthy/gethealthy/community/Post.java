@@ -30,7 +30,8 @@ public class Post {
     * 2 : QnA
     * 3 : 리뷰
     * */
-    private Long category;
+    //deprecated
+//    private Long category;
 
     @Enumerated(EnumType.STRING)
     private PostType postType;
