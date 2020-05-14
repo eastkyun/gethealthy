@@ -54,5 +54,4 @@ public class Post {
 
     @ManyToOne
     private Product product;
-
 }

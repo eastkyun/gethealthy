@@ -88,9 +88,10 @@
                         <img id="review_profile" src="https://i.pinimg.com/474x/72/7a/49/727a499ce8bddcf40ba8f62ca7ead22c--school-icon-icon-icon.jpg"></img>
                     </div>
                     <div class="col-10">
-                        <p class="pull-right">좋아요: <span th:text="${review.liked}"></span></p>
+                        <button class="pull-right review_like_btn" th:text="'좋아요 : ' + ${review.liked}"></button>
                         <h5 th:text="${review.getAuthor().nickname}">Special title treatment</h5>
-                        <span>*****</span> <span th:text="${review.created}"></span>
+                        <span class="my-rating"></span><span th:text="${review.created}"></span>
+
                         <p th:text="${review.contents}">With supporting text below as a natural lead-in to additional content.</p>
                     </div>
                 </div>
@@ -159,5 +160,16 @@
     };
 </script>
 <script>numberWithCommas();</script>
+<script>
+    $(".my-rating").starRating({
+        starSize: 25,
+        readOnly: true,
+        callback: function(currentRating, $el){
+            // make a server call here
+        }
+    });
+    $('.my-rating').starRating('setRating', 3, true)
+
+</script>
 </body>
 </html>
