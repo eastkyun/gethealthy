@@ -15,12 +15,12 @@
     <div class="row mt-5 justify-content-center">
         <div class="col-3">
             <img class="card-img-top" src="https://picsum.photos/seed/picsum/286/180" alt="Card image cap">
-            <p class="lead text-center mt-3" th:text="${productForm.name}">  </p>
         </div>
         <div class="col-6">
+            <p class="lead" th:text="${productForm.name}"></p>
             <p class="lead">원산지 : <span th:text="${productForm.origin}"></span></p>
             <p class="lead">용량 : 1개 &times; <span th:text="${productForm.amount}"></span>팩</p>
-            <p class="lead">가격 : <span th:text="${productForm.price}"></span></p>
+            <p class="lead price">가격 : <span th:text="${productForm.price}"></span></p>
             <p style="color:red" th:if="${productForm.numberOf}<5"> 품절 임박</p>
             <button th:href="@{/order}" class="btn btn-info">주문하기</button>
             <button class="btn btn-info"  th:onclick="addCart([[${productForm.name}]]);"
@@ -53,7 +53,6 @@
 
             <!--좋아요버튼-->
             <div class="tooltip_btn">
-
                 <span id="heart" sec:authorize="isAuthenticated()" th:if="account!=null">
                     <span th:if="${isLiked=='true'}">
                         <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart"></a>
@@ -62,13 +61,12 @@
                         <a th:onclick="likedRequest([[${productForm.name}]]);" style="font-size:24px; color:white;" class="btn btn-info fa fa-heart-o"></a>
                     </span>
                 </span>
-
                 <span id="num_like" class="tooltiptext" th:text="'&#x2661;'+${productForm.liked}"></span>
             </div>
         </div>
     </div>
 
-    <div class="col-9 mt-3 ml-auto mr-auto nav-justified">
+    <div class="col-9 mt-5 ml-auto mr-auto nav-justified">
         <!--메뉴-->
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -83,13 +81,17 @@
                 상품 소개
             </div>
 
-            <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
-                <h5>리뷰</h5>
-                <div class="card" th:each="review : ${reviews}">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${review.getAuthor().nickname}">Special title treatment </h5>
-                        <span th:text="${review.created}"></span> 좋아요: <span th:text="${review.liked}"></span>
-                        <p class="card-text" th:text="${review.contents}">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="tab-pane fade mb-3" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                <h5 class="mt-2">후기(개수)</h5>
+                <div id="review_frame" class="row" th:each="review : ${reviews}">
+                    <div class="col-2">
+                        <img id="review_profile" src="https://i.pinimg.com/474x/72/7a/49/727a499ce8bddcf40ba8f62ca7ead22c--school-icon-icon-icon.jpg"></img>
+                    </div>
+                    <div class="col-10">
+                        <p class="pull-right">좋아요: <span th:text="${review.liked}"></span></p>
+                        <h5 th:text="${review.getAuthor().nickname}">Special title treatment</h5>
+                        <span>*****</span> <span th:text="${review.created}"></span>
+                        <p th:text="${review.contents}">With supporting text below as a natural lead-in to additional content.</p>
                     </div>
                 </div>
             </div>
@@ -156,5 +158,6 @@
         });
     };
 </script>
+<script>numberWithCommas();</script>
 </body>
 </html>
