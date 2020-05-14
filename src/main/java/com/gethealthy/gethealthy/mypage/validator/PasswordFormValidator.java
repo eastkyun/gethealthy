@@ -10,7 +10,7 @@ public class PasswordFormValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return PasswordForm.class.isAssignableFrom(clazz);
+        return clazz.isAssignableFrom(PasswordForm.class);
     }
 
     @Override

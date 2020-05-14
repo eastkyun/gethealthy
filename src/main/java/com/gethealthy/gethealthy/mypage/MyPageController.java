@@ -12,6 +12,7 @@ import com.gethealthy.gethealthy.mypage.validator.PasswordFormValidator;
 import com.gethealthy.gethealthy.products.Product;
 import com.gethealthy.gethealthy.products.ProductService;
 import com.gethealthy.gethealthy.products.form.ProductForm;
+import com.gethealthy.gethealthy.products.validator.ProductFormValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Set;
 
 @Controller
@@ -57,6 +60,12 @@ public class MyPageController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductFormValidator productFormValidator;
+    @InitBinder("productForm")
+    public void productFormInitBinder(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(productFormValidator);
+    }
     @InitBinder("passwordForm")
     public void passwordFormInitBinder(WebDataBinder webDataBinder){
         webDataBinder.addValidators(passwordFormValidator);
@@ -162,21 +171,21 @@ public class MyPageController {
     @GetMapping(MYPAGE_PRODUCT_URL)
     public String productForm(@CurrentUser Account account, Model model){
         model.addAttribute(account);
-        model.addAttribute("product",new ProductForm());
+        model.addAttribute(new ProductForm());
         return MYPAGE_PRODUCT_VIEW_NAME;
     }
     @PostMapping(MYPAGE_PRODUCT_URL+"/add")
-    public String createProduct(@CurrentUser Account account,@ModelAttribute("product") ProductForm productForm,
-                                Errors errors, Model model){
-        Product product = modelMapper.map(productForm, Product.class);
+    public String createProduct(@CurrentUser Account account, @Valid ProductForm productForm,
+                                Errors errors, Model model) throws UnsupportedEncodingException {
         if(errors.hasErrors()){
             model.addAttribute(account);
-            model.addAttribute("product",new ProductForm());
+            model.addAttribute(new ProductForm());
             return MYPAGE_PRODUCT_VIEW_NAME;
         }
+        Product product = modelMapper.map(productForm, Product.class);
         productService.createProduct(account,product);
         model.addAttribute(account);
 
-        return MYPAGE_PRODUCT_VIEW_NAME;
+        return "redirect:/products/details/"+ URLEncoder.encode(product.getName(), "UTF-8");
     }
 }

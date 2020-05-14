@@ -19,15 +19,8 @@
             <div th:replace="fragments.html :: mypage-menu(currentMenu='product')"></div>
         </div>
         <div class="col-8">
-            <div class="alert alert-info alert-dismissible fade show mt-3" role="alert" th:if="${message}">
-                <span th:text="${message}">메시지</span>
-                <button aria-label="Close" class="close" data-dismiss="alert" type="button">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
             <div class="row mt-3">
-                <form class="needs-validation col-sm-11" method="post" novalidate th:action="@{/mypage/product/add}" th:object="${product}">
+                <form class="needs-validation col-sm-11" method="post" novalidate th:action="@{/mypage/product/add}" th:object="${productForm}">
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="name">상품 이름</label>
@@ -38,9 +31,7 @@
                             <small class="form-text text-muted" id="nameHelp">
                                 길지 않게 35자 이내로 입력하세요.
                             </small>
-                            <small class="form-text test-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">
-                                조금 길어요
-                            </small>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</small>
                         </div>
                         <div class="col-6 form-group">
                             <label for="price">상품 가격</label>
@@ -50,6 +41,7 @@
                             <small class="form-text text-muted" id="priceHelp">
                                 상품 가격을 입력하세요.
                             </small>
+                            <small class="invalid-feedback">올바른 값을 입력해주세요.</small>
                             <small class="form-text test-danger" th:errors="*{price}" th:if="${#fields.hasErrors('price')}">
                                 올바른 값을 입력해주세요.
                             </small>
