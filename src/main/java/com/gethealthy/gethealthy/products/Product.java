@@ -1,9 +1,12 @@
 package com.gethealthy.gethealthy.products;
 
 import com.gethealthy.gethealthy.account.Account;
+import com.gethealthy.gethealthy.order.Orders;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter @Setter @EqualsAndHashCode(of="id")
@@ -29,6 +32,9 @@ public class Product {
 
     @Column(nullable = false)
     private boolean displayed;
+
+    @OneToMany(mappedBy = "product_id")
+    private Set<Orders> orders = new HashSet<>();
 
     @Lob
     private String description;

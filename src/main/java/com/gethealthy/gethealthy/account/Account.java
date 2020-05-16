@@ -2,6 +2,7 @@ package com.gethealthy.gethealthy.account;
 
 import com.gethealthy.gethealthy.community.Post;
 import com.gethealthy.gethealthy.community.Reply;
+import com.gethealthy.gethealthy.order.Orders;
 import com.gethealthy.gethealthy.products.Product;
 import lombok.*;
 
@@ -62,6 +63,9 @@ public class Account {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Reply> replies = new HashSet<>();
+
+    @OneToMany(mappedBy = "account_id")
+    private Set<Orders> orders = new HashSet<>();
 
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage;
