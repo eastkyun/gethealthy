@@ -22,7 +22,7 @@
             <p class="lead">용량 : 1개 &times; <span th:text="${productForm.amount}"></span>팩</p>
             <p class="lead price">가격 : <span th:text="${productForm.price}"></span></p>
             <p style="color:red" th:if="${productForm.numberOf}<5"> 품절 임박</p>
-            <button th:href="@{/order}" class="btn btn-info">주문하기</button>
+            <button th:onclick="orderItem([[${productForm.name}]])" class="btn btn-info">주문하기</button>
             <button class="btn btn-info"  th:onclick="addCart([[${productForm.name}]]);"
                     data-toggle="modal" data-target="#myCart">장바구니</button>
 
@@ -170,6 +170,22 @@
     });
     $('.my-rating').starRating('setRating', 3, true)
 
+</script>
+<script type="application/javascript" th:inline="javascript">
+    function orderItem(productName) {
+        $.ajax({
+            dataType: "json",
+            autocomplete: {
+                enabled: true,
+                rightKey: true,
+            },
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "/order",
+            data: JSON.stringify({"name" : productName}),
+        }).done(function (data, status) {
+        });
+    };
 </script>
 </body>
 </html>
