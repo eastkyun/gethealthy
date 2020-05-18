@@ -83,12 +83,12 @@
 
             <div class="tab-pane fade mb-3" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
                 <h5 class="mt-2">후기(개수)</h5>
-                <div id="review_frame" class="row" th:each="review : ${reviews}">
+                <div id="review_frame" class="row" th:each="review, index : ${reviews}">
                     <div class="col-2">
                         <img id="review_profile" src="https://i.pinimg.com/474x/72/7a/49/727a499ce8bddcf40ba8f62ca7ead22c--school-icon-icon-icon.jpg"></img>
                     </div>
                     <div class="col-10">
-                        <button class="pull-right review_like_btn" th:text="'좋아요 : ' + ${review.liked}"></button>
+                        <button class="pull-right review_like_btn" th:id="${'review_like_btn_'+index.index}" onclick="review_heart(this)" th:text="'좋아요 : ' + ${review.liked}"></button>
                         <h5 th:text="${review.getAuthor().nickname}">Special title treatment</h5>
                         <span class="my-rating"></span><span th:text="${review.created}"></span>
 
@@ -170,6 +170,13 @@
     });
     $('.my-rating').starRating('setRating', 3, true)
 
+</script>
+<script>
+    function review_heart(btn){
+        var num = Number(document.getElementById(btn.id).innerText.slice(6));
+        num++;
+        document.getElementById(btn.id).innerText = "좋아요 : " + num;
+    }
 </script>
 </body>
 </html>
