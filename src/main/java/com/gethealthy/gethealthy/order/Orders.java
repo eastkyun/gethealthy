@@ -8,6 +8,10 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter @EqualsAndHashCode(of="id")
@@ -19,12 +23,11 @@ public class Orders {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", insertable = false, updatable = false, referencedColumnName = "id")
+    @JoinColumn(name = "buyer", insertable = false, updatable = false, referencedColumnName = "id")
     private Account account_id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false, referencedColumnName = "id")
-    private Product product_id;
+    @ManyToMany
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     @Column(nullable = false)
     private String recipient;
@@ -56,13 +59,7 @@ public class Orders {
 class Address{
     private String city;
     private String street;
-    @Embedded
-    private ZipCode zipCode;
-}
-@Embeddable
-class ZipCode{
-    String zip;
-    String code;
+    private String zipCode;
 }
 class PhoneNumber{
     String local;

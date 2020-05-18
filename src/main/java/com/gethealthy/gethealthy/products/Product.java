@@ -1,6 +1,7 @@
 package com.gethealthy.gethealthy.products;
 
 import com.gethealthy.gethealthy.account.Account;
+import com.gethealthy.gethealthy.order.OrderItem;
 import com.gethealthy.gethealthy.order.Orders;
 import lombok.*;
 
@@ -32,9 +33,6 @@ public class Product {
 
     @Column(nullable = false)
     private boolean displayed;
-
-    @OneToMany(mappedBy = "product_id")
-    private Set<Orders> orders = new HashSet<>();
 
     @Lob
     private String description;
