@@ -12,3 +12,10 @@ div#review_frame{
     background-color: #ffffff;
     border: 4px double #d4d4d4;
 }
+
+button.review_like_btn{
+    background-color: #017cfe;
+    color: white;
+    border-radius: 50px;
+    border: none;
+}
