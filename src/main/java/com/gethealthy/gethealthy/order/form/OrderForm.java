@@ -32,4 +32,6 @@ public class OrderForm {
 
     private Set<OrderItem> orderItems;
 
+    private String pgKind;
+
 }
