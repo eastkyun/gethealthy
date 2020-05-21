@@ -189,10 +189,11 @@
             contentType: "application/json; charset=utf-8",
             method: "POST",
             url: "/order",
-            data: JSON.stringify({"name" : productName}),
+            data: JSON.stringify({"name" : productName})
         }).done(function (data, status) {
         });
-    };
+        location.href="/order?name="+productName;
+    }
 </script>
 </body>
 </html>

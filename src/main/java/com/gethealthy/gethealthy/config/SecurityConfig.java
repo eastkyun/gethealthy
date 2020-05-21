@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe()
                 .userDetailsService(accountService)
                 .tokenRepository(tokenRepository());
+        //TODO juso.go.kr 에 대한 csrf 토크 해제할 것
     }
 
 

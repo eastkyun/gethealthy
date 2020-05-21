@@ -2,7 +2,8 @@
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments.html :: head"></head>
 
-<body class="bg-light">
+<body class="bg-light" onload="jusoCallBack('우편번호','도로명주소')">
+
 <!-- 네비게이션바-->
 <div th:replace="fragments.html :: main-nav"></div>
 
@@ -16,18 +17,24 @@
         <form class="needs-validation col-sm-6" action="#" th:action="@{/order}"
               th:object="${orderForm}" method="post" novalidate>
             <div class="form-group form-inline">
+                <p th:text="${product.getName()}"></p>
+
+<!--                <label for="orderItems"> 주문 품목 : </label>-->
+<!--                <input id="orderItems" type="hidden" name="orderItems" class="form-control"-->
+<!--                       th:field="*{orderItems}" required>-->
+            </div>
+            <div class="form-group form-inline">
                 <label for="username">받는사람 : </label>
                 <input id="username" type="text" name="username" class="form-control"
                        th:field="*{recipient}" required>
             </div>
             <div class="form-group form-inline">
                 <label>배송주소 </label>
-                <input id="zipCode" type="text" name="zipCode" class="form-control"
-                       th:field="*{zipCode}" required>
-                <input id="city" type="text" name="city" class="form-control"
-                       th:field="*{city}" required>
-                <input id="street" type="text" name="street" class="form-control"
+                <input id="zipNo" type="text" name="zipNo" class="form-control" placeholder="우편번호"
+                       th:field="*{zipCode}" th:value="${param.zipNo}" required>
+                <input id="roadFullAddr" type="text" name="roadFullAddr" class="form-control" placeholder="도로명주소"
                        th:field="*{street}" required>
+                <button type="button" onclick="goPopup()">주소 찾기</button>
             </div>
             <div class="form-group form-inline">
                 <label for="phoneNumber">전화번호 : </label>
@@ -47,11 +54,6 @@
             <div class="form-group form-inline">
                 <input id="price" type="hidden" name="price" class="form-control"
                        th:field="*{price}" th:value="9000"required>
-            </div>
-            <div class="form-group form-inline">
-                <label for="requirement">요구사항 : </label>
-                <input id="requirement" type="text" name="requirement" class="form-control"
-                       th:field="*{requirement}" required>
             </div>
             <div class="form-group form-inline">
                 <label>결제수단 : </label>
@@ -76,6 +78,44 @@
     <!-- 푸터-->
     <div th:replace="fragments.html :: footer"></div>
 </div>
+<div sec:authorize="isAuthenticated()">
+    <script th:replace="fragments.html :: ajax-csrf-header"></script>
+</div>
+<script th:inline="javascript" charset="utf-8">
+    function jusoCallBack(zipNo,roadFullAddr){
+// 도로명주소검색팝업창에서 결과를 리턴하는 스크립트로 빨간 라인은 해당 시스템에 맞게 수정하여 사용
+//2017년 2월 제공항목이 확대되었습니다. 원하시는 항목을 추가하여 사용하시면 됩니다.
+        document.getElementById('roadFullAddr').value = roadFullAddr;
+        document.getElementById('zipNo').value = zipNo;
+        /*<![CDATA[*/
+        var inputYn = /*[[${param.inputYn}]]*/ 'default';
+        /*]]>*/
+        document.domain = "localhost";
+        if(JSON.stringify(inputYn)==JSON.stringify(['Y'])) {
+
+            /*<![CDATA[*/
+            var fullAddr = /*[[${param.roadFullAddr}]]*/ 'default';
+            var zipNum = /*[[${param.zipNo}]]*/ 'default';
+            /*]]>*/
+            opener.jusoCallBack(zipNum,fullAddr);
+            window.close();
+        }
+    }
+</script>
+<script th:inline="javascript" charset="utf-8">
+    function goPopup() {
+        var returnUrl=location.href;
+        /*<![CDATA[*/
+        var inputYn = /*[[${param.inputYn}]]*/ 'default';
+        /*]]>*/
+        if(JSON.stringify(inputYn)!=JSON.stringify(['Y'])) {
+            var confmKey="U01TX0FVVEgyMDIwMDUyMTE5MzE1NTEwOTc4NzU=";
+            var resultType = "4";
+            url="http://www.juso.go.kr/addrlink/addrLinkUrl.do?confmKey="+confmKey+"&returnUrl="+returnUrl+"&resultType="+resultType;
+            window.open(url, "pop", "width=870,height=820, scrollbars=yes, resizable=yes");
+        }
+    }
+</script>
 
 </body>
 </html>
