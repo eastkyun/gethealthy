@@ -21,7 +21,6 @@ public class OrderForm {
 
     private String zipCode;
 
-
     private String price;
 
     private LocalDateTime orderedAt;

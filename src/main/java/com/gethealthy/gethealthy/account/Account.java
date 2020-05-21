@@ -64,7 +64,7 @@ public class Account {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Reply> replies = new HashSet<>();
 
-    @OneToMany(mappedBy = "account_id")
+    @OneToMany(mappedBy = "buyer")
     private Set<Orders> orders = new HashSet<>();
 
     @Lob @Basic(fetch = FetchType.EAGER)

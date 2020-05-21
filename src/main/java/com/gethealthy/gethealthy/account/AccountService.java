@@ -3,6 +3,7 @@ package com.gethealthy.gethealthy.account;
 import com.gethealthy.gethealthy.account.form.SignUpForm;
 import com.gethealthy.gethealthy.mypage.form.Notifications;
 import com.gethealthy.gethealthy.mypage.form.Profile;
+import com.gethealthy.gethealthy.order.Orders;
 import com.gethealthy.gethealthy.products.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,4 +161,20 @@ public class AccountService implements UserDetailsService {
         Account byNickname = accountRepository.findByNickname(account.getNickname());
         return byNickname.getCart();
     }
+
+    public void addOrders(Account account, Orders orders) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getOrders().add(orders));
+    }
+
+    public void removeOrders(Account account, Orders orders) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getOrders().remove(orders));
+    }
+
+    public Set<Orders> getOrders(Account account){
+        Account byNickname = accountRepository.findByNickname(account.getNickname());
+        return byNickname.getOrders();
+    }
+
 }

@@ -24,7 +24,7 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "buyer", insertable = false, updatable = false, referencedColumnName = "id")
-    private Account account_id;
+    private Account buyer;
 
     @ManyToMany
     private Set<OrderItem> orderItems = new HashSet<>();
@@ -53,6 +53,8 @@ public class Orders {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
+
+    private String pgKind;
 }
 
 @Embeddable
