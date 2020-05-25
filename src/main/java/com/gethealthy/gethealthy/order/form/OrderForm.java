@@ -29,7 +29,10 @@ public class OrderForm {
 
     private String requirement;
 
-    private Set<OrderItem> orderItems;
+//    private Set<OrderItem> orderItems;
+    private String orderItem;
+
+    private String orderQuantity;
 
     private String pgKind;
 

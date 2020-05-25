@@ -23,17 +23,14 @@ public class OrderController {
     @Autowired private OrderRepository orderRepository;
     @Autowired private AccountService accountService;
     @Autowired private ProductRepository productRepository;
-    @Autowired private ModelMapper modelMapper;
     @PostMapping("/order")
-    public String orderItem(@CurrentUser Account account, ProductForm productForm,
+    public String orderItem(@CurrentUser Account account, OrderForm orderForm,
                             Model model) {
+        // @TODO 주문 비지니스 로직
+        orderService.order(account,orderForm);
 
-        Product product = productRepository.findByName(productForm.getName());
-        model.addAttribute(product);
-        OrderForm orderForm = new OrderForm();
-        model.addAttribute(orderForm);
-        model.addAttribute(account);
-        return "order/form";
+
+        return "redirect:/order/complete";
     }
     @GetMapping("/order")
     public String orderForm(@CurrentUser Account account, @RequestParam String name, Model model){
@@ -43,5 +40,9 @@ public class OrderController {
         model.addAttribute(new OrderForm());
         return "order/form";
     }
-
+    @GetMapping("/order/complete")
+    public String orderSheet(@CurrentUser Account account, Model model){
+        model.addAttribute(account);
+        return "order/complete";
+    }
 }

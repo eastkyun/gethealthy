@@ -17,7 +17,10 @@
         <form class="needs-validation col-sm-6" action="#" th:action="@{/order}"
               th:object="${orderForm}" method="post" novalidate>
             <div class="form-group form-inline">
-                <p th:text="${product.getName()}"></p>
+                <p th:text="${product.name}"></p>
+
+                <input id="orderItem" type="hidden" name="orderItem" class="form-control"
+                       th:value="${product.getName()}" required>
 
 <!--                <label for="orderItems"> 주문 품목 : </label>-->
 <!--                <input id="orderItems" type="hidden" name="orderItems" class="form-control"-->
@@ -53,7 +56,7 @@
             </div>
             <div class="form-group form-inline">
                 <input id="price" type="hidden" name="price" class="form-control"
-                       th:field="*{price}" th:value="9000"required>
+                       value="price" required>
             </div>
             <div class="form-group form-inline">
                 <label>결제수단 : </label>
