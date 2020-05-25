@@ -58,11 +58,13 @@ public class Orders {
 }
 
 @Embeddable
+@Data
 class Address{
     private String city;
     private String street;
     private String zipCode;
 }
+@Data
 class PhoneNumber{
     String local;
     String phoneNumber;
