@@ -14,7 +14,7 @@
 <!--메인 화면-->
 <div class="container">
     <div class="row justify-content-center">
-        <form class="needs-validation col-sm-6" action="#" th:action="@{/order}"
+        <form class="needs-validation col-sm-7" action="#" th:action="@{/order}"
               th:object="${orderForm}" method="post" novalidate>
             <div class="form-group form-inline">
                 <p th:text="${product.name}"></p>
@@ -26,49 +26,94 @@
 <!--                <input id="orderItems" type="hidden" name="orderItems" class="form-control"-->
 <!--                       th:field="*{orderItems}" required>-->
             </div>
+
+            <hr>
+            <h6>주문자 정보</h6>
             <div class="form-group form-inline">
-                <label for="username">받는사람 : </label>
-                <input id="username" type="text" name="username" class="form-control"
-                       th:field="*{recipient}" required>
+                <table>
+                    <tr>
+                        <td class="formLabel">
+                            <label for="username">받는사람</label>
+                        </td>
+                        <td class="formInput">
+                            <input id="username" type="text" name="username" class="form-control"
+                                   th:field="*{recipient}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formLabel">
+                            <label for="phoneNumber">전화번호</label>
+                        </td>
+                        <td class="formInput">
+                            <input id="phoneNumber" type="text" name="phoneNumber" class="form-control"
+                                   th:field="*{phoneNumber}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formLabel">
+                            <label for="email">이메일</label>
+                        </td>
+                        <td class="formInput">
+                            <input id="email" type="text" name="email" class="form-control" style="width:100%;"
+                                   th:field="*{email}" required>
+                        </td>
+                    </tr>
+                </table>
             </div>
+
+            <hr>
+            <h6>배송 정보</h6>
             <div class="form-group form-inline">
-                <label>배송주소 </label>
-                <input id="zipNo" type="text" name="zipNo" class="form-control" placeholder="우편번호"
-                       th:field="*{zipCode}" th:value="${param.zipNo}" required>
-                <input id="roadFullAddr" type="text" name="roadFullAddr" class="form-control" placeholder="도로명주소"
-                       th:field="*{street}" required>
-                <button type="button" onclick="goPopup()">주소 찾기</button>
+                <table>
+                    <tr>
+                        <td class="formLabel">
+                            <label>배송주소</label>
+                        </td>
+                        <td class="formInput">
+                            <input id="zipNo" type="text" name="zipNo" class="form-control mb-2" placeholder="우편번호"
+                                   th:field="*{zipCode}" th:value="${param.zipNo}" required>
+                            <button type="button" id="search_btn" onclick="goPopup()">주소 찾기</button>
+                            <input id="roadFullAddr" type="text" name="roadFullAddr" class="form-control" placeholder="도로명주소"
+                                   th:field="*{street}" required>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formLabel">
+                            <label for="requirement">배송 시 요구사항</label>
+                        </td>
+                        <td class="formInput">
+                            <input id="requirement" type="text" name="requirement" class="form-control" style="width:100%;"
+                                   th:field="*{requirement}" required>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="form-group form-inline">
-                <label for="phoneNumber">전화번호 : </label>
-                <input id="phoneNumber" type="text" name="phoneNumber" class="form-control"
-                       th:field="*{phoneNumber}" required>
-            </div>
-            <div class="form-group form-inline">
-                <label for="requirement">요구사항 : </label>
-                <input id="requirement" type="text" name="requirement" class="form-control"
-                       th:field="*{requirement}" required>
-            </div>
-            <div class="form-group form-inline">
-                <label for="email">이메일 : </label>
-                <input id="email" type="text" name="email" class="form-control"
-                       th:field="*{email}" required>
-            </div>
+
             <div class="form-group form-inline">
                 <input id="price" type="hidden" name="price" class="form-control"
                        value="price" required>
             </div>
+            <hr>
+            <h6>결제 정보</h6>
             <div class="form-group form-inline">
-                <label>결제수단 : </label>
-                <input id="credit" type="radio" class="form-control"
-                       th:field="*{pgKind}" th:value="credit" required>신용카드
-                <input id="deposit" type="radio" class="form-control"
-                       th:field="*{pgKind}" th:value="deposit" required>무통장입금
-                <input id="kkopay" type="radio" class="form-control"
-                       th:field="*{pgKind}" th:value="kkopay" required>kkopay
-                <input id="npay" type="radio" class="form-control"
-                       th:field="*{pgKind}" th:value="npay" required>npay
+                <table>
+                    <td class="formLabel">
+                        <label>결제수단</label>
+                    </td>
+                    <td class="formInput">
+                        <input id="credit" type="radio" class="form-control"
+                               th:field="*{pgKind}" th:value="credit" required>신용카드
+                        <input id="deposit" type="radio" class="form-control"
+                               th:field="*{pgKind}" th:value="deposit" required>무통장입금
+                        <input id="kkopay" type="radio" class="form-control"
+                               th:field="*{pgKind}" th:value="kkopay" required>kkopay
+                        <input id="npay" type="radio" class="form-control"
+                               th:field="*{pgKind}" th:value="npay" required>npay
+                    </td>
+                </table>
             </div>
+
             <div class="form-group">
                 <button class="btn btn-success btn-block" type="submit"
                         aria-describedby="submitHelp">결제하기</button>
