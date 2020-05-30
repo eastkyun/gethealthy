@@ -16,8 +16,29 @@
     <div class="row justify-content-center">
         <form class="needs-validation col-sm-7" action="#" th:action="@{/order}"
               th:object="${orderForm}" method="post" novalidate>
+
+            <h6>주문 내역</h6>
+            <table id="order_product">
+                <tr style="height: 33px;">
+                    <td class="size_lg">주문상품</td>
+                    <td class="size_sm">수량</td>
+                    <td class="size_md">판매가</td>
+                    <td class="size_md">합계</td>
+                </tr>
+                <tr style="height: 63px;">
+                    <td th:text="${product.name}"></td>
+<!--                    <td th:text="${product.amount}">1</td>-->
+                    <td>1</td>
+                    <td th:text="${product.price}">asdf</td>
+                    <td th:text="1 * ${product.price}">asdf</td>
+                </tr>
+                <tr style="height: 33px;">
+                    <td colspan="4">총 결제 금액 : 50000원</td>
+                </tr>
+            </table>
+
             <div class="form-group form-inline">
-                <p th:text="${product.name}"></p>
+<!--                <p th:text="${product.name}"></p>-->
 
                 <input id="orderItem" type="hidden" name="orderItem" class="form-control"
                        th:value="${product.getName()}" required>
@@ -90,28 +111,34 @@
                 </table>
             </div>
 
+            <hr>
+
+            <h6>결제 정보</h6>
             <div class="form-group form-inline">
                 <input id="price" type="hidden" name="price" class="form-control"
                        value="price" required>
-            </div>
-            <hr>
-            <h6>결제 정보</h6>
-            <div class="form-group form-inline">
-                <table>
-                    <td class="formLabel">
-                        <label>결제수단</label>
-                    </td>
-                    <td class="formInput">
-                        <input id="credit" type="radio" class="form-control"
-                               th:field="*{pgKind}" th:value="credit" required>신용카드
-                        <input id="deposit" type="radio" class="form-control"
-                               th:field="*{pgKind}" th:value="deposit" required>무통장입금
-                        <input id="kkopay" type="radio" class="form-control"
-                               th:field="*{pgKind}" th:value="kkopay" required>kkopay
-                        <input id="npay" type="radio" class="form-control"
-                               th:field="*{pgKind}" th:value="npay" required>npay
-                    </td>
+                <table style="width:100%;">
+                    <tr>
+                        <td class="formLabel" style="width:25%;">
+                            <label>결제수단</label>
+                        </td>
+                        <td class="formInput" style="width:75%;">
+                            <input id="credit" type="radio" class="form-control"
+                                   th:field="*{pgKind}" th:value="credit" required>신용카드
+                            <input id="deposit" type="radio" class="form-control"
+                                   th:field="*{pgKind}" th:value="deposit" required>무통장입금
+                            <input id="kkopay" type="radio" class="form-control"
+                                   th:field="*{pgKind}" th:value="kkopay" required>kkopay
+                            <input id="npay" type="radio" class="form-control"
+                                   th:field="*{pgKind}" th:value="npay" required>npay
+                        </td>
+                    </tr>
                 </table>
+            </div>
+
+            <div id="totalPrice">
+                <p>최종 결제 금액</p>
+                <p>50000원</p>
             </div>
 
             <div class="form-group">
